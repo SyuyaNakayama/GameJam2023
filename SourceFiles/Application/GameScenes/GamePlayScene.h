@@ -1,11 +1,11 @@
 #pragma once
 #include "BaseScene.h"
-#include "Object3d.h"
+#include "Stage.h"
 
 class GamePlayScene : public BaseScene
 {
 	ViewProjection viewProjection;
-	std::unique_ptr<Sprite> sprite;
+	Stage stage;
 
 	void Initialize();
 	void Update();

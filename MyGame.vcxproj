@@ -70,12 +70,13 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Skydome;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\GameScenes;$(ProjectDir)SourceFiles\Application\MyGame;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Skydome;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\GameScenes;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>strmiids.lib;DMyGame.lib;DDirectXTex.lib;Dimgui.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -95,7 +96,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Skydome;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\GameScenes;$(ProjectDir)SourceFiles\Application\MyGame;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Skydome;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\GameScenes;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -171,6 +172,8 @@
     <ClCompile Include="SourceFiles\Application\GameScenes\SceneFactory.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\TitleScene.cpp" />
     <ClCompile Include="SourceFiles\Application\MyGame\MyGame.cpp" />
+    <ClCompile Include="SourceFiles\Application\Stage\Block.cpp" />
+    <ClCompile Include="SourceFiles\Application\Stage\Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Application\GameScenes\GamePlayScene.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="SourceFiles\Application\GameScenes\SceneFactory.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\TitleScene.h" />
     <ClInclude Include="SourceFiles\Application\MyGame\MyGame.h" />
+    <ClInclude Include="SourceFiles\Application\Stage\Block.h" />
     <ClInclude Include="SourceFiles\Engine\2d\ImGuiManager.h" />
     <ClInclude Include="SourceFiles\Engine\2d\PostEffect.h" />
     <ClInclude Include="SourceFiles\Engine\2d\Sprite.h" />
@@ -223,6 +227,7 @@
     <ClInclude Include="SourceFiles\Engine\Scene\SceneManager.h" />
     <ClInclude Include="SourceFiles\Engine\Skydome\Skydome.h" />
     <ClInclude Include="SourceFiles\Engine\WinApp\WindowsAPI.h" />
+    <ClInclude Include="SourceFiles\Application\Stage\Stage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,19 +5,18 @@
 
 void GamePlayScene::Initialize()
 {
-	debugCamera.Initialize({ 0,0 });
+	debugCamera.Initialize({ 0,0 },200);
 	viewProjection.Initialize();
 	ModelManager::SetViewProjection(&debugCamera);
-	sprite = Sprite::Create("64670481_p0_master1200.jpg");
+	stage.Initialize();
 }
 
 void GamePlayScene::Update()
 {
 	debugCamera.Update();
-	sprite->Update();
+	stage.Update();
 }
 
 void GamePlayScene::Draw()
 {
-	sprite->Draw();
 }

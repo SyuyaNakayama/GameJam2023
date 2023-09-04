@@ -84,6 +84,9 @@
     <Filter Include="ソース ファイル\Engine\Json">
       <UniqueIdentifier>{0eb5dc25-4fb5-433e-ad61-6d78878c3a19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\Stage">
+      <UniqueIdentifier>{31a40448-7088-4fc5-a3eb-920c5fc21a89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -149,6 +152,12 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\Application\GameScenes\TitleScene.cpp">
       <Filter>ソース ファイル\Application\GameScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\Stage\Stage.cpp">
+      <Filter>ソース ファイル\Application\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\Application\Stage\Block.cpp">
+      <Filter>ソース ファイル\Application\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\GameScenes\TitleScene.h">
       <Filter>ソース ファイル\Application\GameScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\Stage\Stage.h">
+      <Filter>ソース ファイル\Application\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\Stage\Block.h">
+      <Filter>ソース ファイル\Application\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
