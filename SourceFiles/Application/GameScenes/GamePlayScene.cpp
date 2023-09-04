@@ -5,7 +5,7 @@
 
 void GamePlayScene::Initialize()
 {
-	debugCamera.Initialize({ 0,0 },200);
+	debugCamera.Initialize({ 12,20 },200);
 	viewProjection.Initialize();
 	ModelManager::SetViewProjection(&debugCamera);
 	stage.Initialize();

@@ -12,7 +12,10 @@ private:
 	Input* input = nullptr; // Inputのポインタ
 	std::vector<Vector2> blockArr; // ローカル座標でのブロック配置
 	Vector2 blockPos; // 中心の位置
-	Object3d* model = nullptr;
+	Object3d* parent;
+	std::vector<Object3d*> models{};
+
+	void Move();
 
 public:
 	void Initialize();
