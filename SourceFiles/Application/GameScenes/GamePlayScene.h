@@ -288,6 +288,6 @@ private:
 
     int fall[FIELD_HEIGHT][FIELD_WIDTH] = { 0 };
 
-    int sam;
+    int sam[21];
     int deleteNum;
 };

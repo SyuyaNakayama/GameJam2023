@@ -29,7 +29,8 @@ void GamePlayScene::Update()
 
     ImGui::Text("isHit:%d", isHit(minoX, minoY + 1, minoType, minoAngle));
     ImGui::Text("deleteNum:%d", deleteNum);
-    for (int i = 0; i < 22; i++) {
+    ImGui::Text("sam:%d", sam);
+    /*for (int i = 0; i < 22; i++) {
         ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
             field[i][0], field[i][1], field[i][2], field[i][3], field[i][4], field[i][5],
             field[i][6], field[i][7], field[i][8], field[i][9], field[i][10], field[i][11]);
@@ -41,7 +42,7 @@ void GamePlayScene::Update()
         ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
             displayBuffer[i][0], displayBuffer[i][1], displayBuffer[i][2], displayBuffer[i][3], displayBuffer[i][4],  displayBuffer[i][5],
             displayBuffer[i][6], displayBuffer[i][7], displayBuffer[i][8], displayBuffer[i][9], displayBuffer[i][10], displayBuffer[i][11]);
-    }
+    }*/
     
     
 
@@ -99,8 +100,6 @@ void GamePlayScene::Update()
                         field[minoY + i][minoX + j] |= minoShapes[minoType][minoAngle][i][j];
                     }
                 }
-
-                
                 resetMino();
             }
             else{
@@ -110,6 +109,32 @@ void GamePlayScene::Update()
             display();
         }
     }
+
+    //ëµÇ¡ÇƒÇ¢ÇÈçsÇíTÇ∑
+    for (int i = FIELD_HEIGHT - 2; i > 0; i--) {//àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
+        //â°àÍóÒÇÃçáåvÇãÅÇﬂÇÈ
+        sam[i] = field[i][0] + field[i][1] + field[i][2] + field[i][3] + field[i][4] + field[i][5] +
+            field[i][6] + field[i][7] + field[i][8] + field[i][9] + field[i][10] + field[i][11];
+
+
+        
+
+        for (int j = 0; j < FIELD_WIDTH; ++j) {
+            if (sam[i] == 12) {//ëµÇ¡ÇΩÇÁè¡Ç∑
+                field[i][j] = 0;
+                
+                for (int x = i; x > 0; x--) {
+                    field[x + 1][j] = field[x][j];
+                    field[x][j] = 0;
+                }
+            }
+        }
+        //memcpy(field, fall, sizeof(field));
+    }
+
+
+
+
 
     //// ëµÇ¡ÇΩÇÁÇØÇ∑
     //memcpy(fall, field, sizeof(field));
