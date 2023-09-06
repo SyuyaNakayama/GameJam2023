@@ -279,6 +279,9 @@ private:
     bool isflag = true;
     //bool isLineFilled = true;
     RealTimer Mtimer;
+    RealTimer fallTimer = 0.03f;
+    int holdTimeA = 0;
+    int holdTimeD = 0;
 	//　　　　　　　　y   x
 	Object3d* blocks[22][12];
 
