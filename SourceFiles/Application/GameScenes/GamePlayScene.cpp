@@ -14,7 +14,7 @@ void GamePlayScene::Initialize()
 	for (int y = 0; y < 22; y++) {
 		for (int x = 0; x < 12; x++) {
 			blocks[y][x] = ModelManager::Create("cube");
-            blocks[y][x]->worldTransform->scale *= 5.0f;
+            blocks[y][x]->worldTransform->scale *= 4.8f;
 			blocks[y][x]->worldTransform->translation = { -((float)x - 12 / 2) * 5 * 2, -((float)y - 22 / 2) * 5 * 2, 0.0f };
 		}
 	}
@@ -28,8 +28,7 @@ void GamePlayScene::Update()
 	//stage.Update();
 
     ImGui::Text("isHit:%d", isHit(minoX, minoY + 1, minoType, minoAngle));
-    ImGui::Text("isLineFilled:%d", isLineFilled);
-    
+    ImGui::Text("deleteNum:%d", deleteNum);
     for (int i = 0; i < 22; i++) {
         ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
             field[i][0], field[i][1], field[i][2], field[i][3], field[i][4], field[i][5],
@@ -58,11 +57,7 @@ void GamePlayScene::Update()
 		field[FIELD_HEIGHT - 1][i] = 1;
 	}
 
-
-
-    //resetMino();
-    //time_t t = time(NULL);
-
+    //minoÇìÆÇ©Ç∑
     if(isflag == true)
     {
         if (input->IsTrigger(Key::S)) {
@@ -94,48 +89,37 @@ void GamePlayScene::Update()
         }
         display();
         
-        
-
-
-        if (Mtimer.Update())
-        {
+        if (Mtimer.Update()){
             Mtimer.Start();
 
-            if (isHit(minoX, minoY + 1, minoType, minoAngle))
-            {
-                for (int i = 0; i < MINO_HEIGHT; ++i)
-                {
-                    for (int j = 0; j < MINO_WIDTH; ++j)
-                    {
+            //ìÆÇ©ÇµÇƒÇÈmino
+            if (isHit(minoX, minoY + 1, minoType, minoAngle)){
+                for (int i = 0; i < MINO_HEIGHT; ++i){
+                    for (int j = 0; j < MINO_WIDTH; ++j){
                         field[minoY + i][minoX + j] |= minoShapes[minoType][minoAngle][i][j];
                     }
                 }
 
                 // erase block
-                for (int i = 0; i < FIELD_HEIGHT - 1; ++i)
-                {
-                    
-                    for (int j = 1; j < FIELD_WIDTH - 1; ++j)
-                    {
-                        if (1 != field[i][j])
+                for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
+                    bool isLineFill = true;
+                    for (int j = 1; j < FIELD_WIDTH - 1; ++j){
+                        if (field[i][j] != 0)
                         {
-                            isLineFilled = false;
+                            isLineFill = false;
                         }
                     }
 
-                    if (true == isLineFilled)
-                    {
-                        for (int j = i; j > 0; --j)
-                        {
+                    if (isLineFill == true){
+                        for (int j = i; j > 0; j--){
                             memcpy(field[j], field[j - 1], FIELD_WIDTH);
                         }
-                    }
+                    }  
                 }
 
                 resetMino();
             }
-            else
-            {
+            else{
                 ++minoY;
             }
 
@@ -152,6 +136,45 @@ void GamePlayScene::Draw()
 void GamePlayScene::display()
 {
     memcpy(displayBuffer, field, sizeof(field));
+
+    
+
+
+    ////ëµÇ¡ÇΩÇÁè¡Ç∑
+    //for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
+    //    for (int j = 0; j < FIELD_WIDTH; ++j) {
+
+    //        sam += displayBuffer[i][j];
+    //        if (sam >= 12) {//ëµÇ¡ÇΩçsÇíTÇ∑
+    //            deleteNum = i;
+    //        }
+
+    //        //ëµÇ¡ÇΩóÒÇè¡Ç∑
+    //        displayBuffer[deleteNum][j] = 0;
+    //        field[deleteNum][j] = 0;
+    //        if (j == FIELD_WIDTH - 1) {//àÍçsÇ‚Ç¡ÇΩÇÁñﬂÇ∑
+    //            sam = 0;
+    //            
+    //        }
+    //    }
+    //    deleteNum = 0;
+    //}
+
+    //for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
+    //    for (int j = 0; j < FIELD_WIDTH; ++j) {
+
+    //        if (displayBuffer[i][j] == 1 && displayBuffer[i + 1][j] == 0) {//Ç‡Çµ1ÇÃÇ∆Ç´,â∫Ç™0Ç»ÇÁ
+    //            
+    //            //íuÇ´ä∑Ç¶ÇÈ
+    //            displayBuffer[i + 1][j] = 1;
+    //            displayBuffer[i][j] = 0;
+    //            field[i + 1][j] = 1;
+    //            field[i][j] = 0;
+    //        }
+
+    //    }
+    //}
+
 
     for (int i = 0; i < MINO_HEIGHT; ++i)
     {
