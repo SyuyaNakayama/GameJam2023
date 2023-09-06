@@ -46,11 +46,11 @@ void GamePlayScene::Update()
     
 
     //òg
-	for (int i = 0; i < FIELD_HEIGHT; ++i)
+	/*for (int i = 0; i < FIELD_HEIGHT; ++i)
 	{
 		field[i][0] = 1;
 		field[i][FIELD_WIDTH - 1] = 1;
-	}
+	}*/
 
 	for (int i = 0; i < FIELD_WIDTH; ++i)
 	{
@@ -100,42 +100,7 @@ void GamePlayScene::Update()
                     }
                 }
 
-                // ëµÇ¡ÇΩÇÁÇØÇ∑
-                memcpy(fall, field, sizeof(field));
-                for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
-                    for (int j = 0; j < FIELD_WIDTH; ++j) {
-
-                        sam += fall[i][j];
-                        if (sam >= 12) {//ëµÇ¡ÇΩçsÇíTÇ∑
-                            deleteNum = i;
-                        }
-
-                        //ëµÇ¡ÇΩóÒÇè¡Ç∑
-                        fall[deleteNum][j] = 0;
-                        
-                        if (j == FIELD_WIDTH - 1) {//àÍçsÇ‚Ç¡ÇΩÇÁñﬂÇ∑
-                            sam = 0;
-
-                        }
-                    }
-                    //deleteNum = 0;
-                }
-
-                //â∫Ç∞ÇÈ
-                for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
-                    for (int j = 0; j < FIELD_WIDTH; ++j) {
-
-                        if (fall[i][j] == 1 && fall[i + 1][j] == 0) {//Ç‡Çµ1ÇÃÇ∆Ç´,â∫Ç™0Ç»ÇÁ
-
-                            //íuÇ´ä∑Ç¶ÇÈ
-                            fall[i + 1][j] = 1;
-                            fall[i][j] = 0;
-                        }
-
-                    }
-                }
-
-                memcpy(field, fall, sizeof(field));
+                
                 resetMino();
             }
             else{
@@ -145,6 +110,42 @@ void GamePlayScene::Update()
             display();
         }
     }
+    // ëµÇ¡ÇΩÇÁÇØÇ∑
+    memcpy(fall, field, sizeof(field));
+    for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
+        for (int j = 0; j < FIELD_WIDTH; ++j) {
+
+            sam += fall[i][j];
+            if (sam >= 12) {//ëµÇ¡ÇΩçsÇíTÇ∑
+                deleteNum = i;
+            }
+
+            //ëµÇ¡ÇΩóÒÇè¡Ç∑
+            fall[deleteNum][j] = 0;
+
+            if (j == FIELD_WIDTH - 1) {//àÍçsÇ‚Ç¡ÇΩÇÁñﬂÇ∑
+                sam = 0;
+
+            }
+        }
+        //deleteNum = 0;
+    }
+
+    //â∫Ç∞ÇÈ
+    for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
+        for (int j = 0; j < FIELD_WIDTH; ++j) {
+
+            if (fall[i][j] == 1 && fall[i + 1][j] == 0) {//Ç‡Çµ1ÇÃÇ∆Ç´,â∫Ç™0Ç»ÇÁ
+
+                //íuÇ´ä∑Ç¶ÇÈ
+                fall[i + 1][j] = 1;
+                fall[i][j] = 0;
+            }
+
+        }
+    }
+
+    memcpy(field, fall, sizeof(field));
 }
 
 void GamePlayScene::Draw()
