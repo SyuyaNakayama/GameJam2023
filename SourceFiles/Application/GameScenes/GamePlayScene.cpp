@@ -100,23 +100,42 @@ void GamePlayScene::Update()
                     }
                 }
 
-                // erase block
-                for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
-                    bool isLineFill = true;
-                    for (int j = 1; j < FIELD_WIDTH - 1; ++j){
-                        if (field[i][j] != 0)
-                        {
-                            isLineFill = false;
+                // ëµÇ¡ÇΩÇÁÇØÇ∑
+                memcpy(fall, field, sizeof(field));
+                for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
+                    for (int j = 0; j < FIELD_WIDTH; ++j) {
+
+                        sam += fall[i][j];
+                        if (sam >= 12) {//ëµÇ¡ÇΩçsÇíTÇ∑
+                            deleteNum = i;
+                        }
+
+                        //ëµÇ¡ÇΩóÒÇè¡Ç∑
+                        fall[deleteNum][j] = 0;
+                        
+                        if (j == FIELD_WIDTH - 1) {//àÍçsÇ‚Ç¡ÇΩÇÁñﬂÇ∑
+                            sam = 0;
+
                         }
                     }
-
-                    if (isLineFill == true){
-                        for (int j = i; j > 0; j--){
-                            memcpy(field[j], field[j - 1], FIELD_WIDTH);
-                        }
-                    }  
+                    //deleteNum = 0;
                 }
 
+                //â∫Ç∞ÇÈ
+                for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
+                    for (int j = 0; j < FIELD_WIDTH; ++j) {
+
+                        if (fall[i][j] == 1 && fall[i + 1][j] == 0) {//Ç‡Çµ1ÇÃÇ∆Ç´,â∫Ç™0Ç»ÇÁ
+
+                            //íuÇ´ä∑Ç¶ÇÈ
+                            fall[i + 1][j] = 1;
+                            fall[i][j] = 0;
+                        }
+
+                    }
+                }
+
+                memcpy(field, fall, sizeof(field));
                 resetMino();
             }
             else{
@@ -140,40 +159,40 @@ void GamePlayScene::display()
     
 
 
-    ////ëµÇ¡ÇΩÇÁè¡Ç∑
-    //for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
-    //    for (int j = 0; j < FIELD_WIDTH; ++j) {
+    //ëµÇ¡ÇΩÇÁè¡Ç∑
+    for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
+        for (int j = 0; j < FIELD_WIDTH; ++j) {
 
-    //        sam += displayBuffer[i][j];
-    //        if (sam >= 12) {//ëµÇ¡ÇΩçsÇíTÇ∑
-    //            deleteNum = i;
-    //        }
+            sam += displayBuffer[i][j];
+            if (sam >= 12) {//ëµÇ¡ÇΩçsÇíTÇ∑
+                deleteNum = i;
+            }
 
-    //        //ëµÇ¡ÇΩóÒÇè¡Ç∑
-    //        displayBuffer[deleteNum][j] = 0;
-    //        field[deleteNum][j] = 0;
-    //        if (j == FIELD_WIDTH - 1) {//àÍçsÇ‚Ç¡ÇΩÇÁñﬂÇ∑
-    //            sam = 0;
-    //            
-    //        }
-    //    }
-    //    deleteNum = 0;
-    //}
+            //ëµÇ¡ÇΩóÒÇè¡Ç∑
+            displayBuffer[deleteNum][j] = 0;
+            field[deleteNum][j] = 0;
+            if (j == FIELD_WIDTH - 1) {//àÍçsÇ‚Ç¡ÇΩÇÁñﬂÇ∑
+                sam = 0;
+                
+            }
+        }
+        deleteNum = 0;
+    }
 
-    //for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
-    //    for (int j = 0; j < FIELD_WIDTH; ++j) {
+    for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
+        for (int j = 0; j < FIELD_WIDTH; ++j) {
 
-    //        if (displayBuffer[i][j] == 1 && displayBuffer[i + 1][j] == 0) {//Ç‡Çµ1ÇÃÇ∆Ç´,â∫Ç™0Ç»ÇÁ
-    //            
-    //            //íuÇ´ä∑Ç¶ÇÈ
-    //            displayBuffer[i + 1][j] = 1;
-    //            displayBuffer[i][j] = 0;
-    //            field[i + 1][j] = 1;
-    //            field[i][j] = 0;
-    //        }
+            if (displayBuffer[i][j] == 1 && displayBuffer[i + 1][j] == 0) {//Ç‡Çµ1ÇÃÇ∆Ç´,â∫Ç™0Ç»ÇÁ
+                
+                //íuÇ´ä∑Ç¶ÇÈ
+                displayBuffer[i + 1][j] = 1;
+                displayBuffer[i][j] = 0;
+                field[i + 1][j] = 1;
+                field[i][j] = 0;
+            }
 
-    //    }
-    //}
+        }
+    }
 
 
     for (int i = 0; i < MINO_HEIGHT; ++i)

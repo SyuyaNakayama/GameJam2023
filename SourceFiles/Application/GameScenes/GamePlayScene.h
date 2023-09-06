@@ -286,6 +286,8 @@ private:
 
     int displayBuffer[FIELD_HEIGHT][FIELD_WIDTH] = { 0 };
 
+    int fall[FIELD_HEIGHT][FIELD_WIDTH] = { 0 };
+
     int sam;
     int deleteNum;
 };
