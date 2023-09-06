@@ -277,7 +277,7 @@ private:
     int minoY = 0;
 
     bool isflag = true;
-    bool isLineFilled = true;
+    //bool isLineFilled = true;
     RealTimer Mtimer;
     RealTimer fallTimer = 0.03f;
     int holdTimeA = 0;
@@ -289,5 +289,8 @@ private:
 
     int displayBuffer[FIELD_HEIGHT][FIELD_WIDTH] = { 0 };
 
+    int fall[FIELD_HEIGHT][FIELD_WIDTH] = { 0 };
 
+    int sam[21];
+    int deleteNum;
 };

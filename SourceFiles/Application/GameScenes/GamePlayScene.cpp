@@ -14,7 +14,7 @@ void GamePlayScene::Initialize()
 	for (int y = 0; y < 22; y++) {
 		for (int x = 0; x < 12; x++) {
 			blocks[y][x] = ModelManager::Create("cube");
-			blocks[y][x]->worldTransform->scale *= 5.0f;
+            blocks[y][x]->worldTransform->scale *= 4.8f;
 			blocks[y][x]->worldTransform->translation = { -((float)x - 12 / 2) * 5 * 2, -((float)y - 22 / 2) * 5 * 2, 0.0f };
 		}
 	}
@@ -27,29 +27,31 @@ void GamePlayScene::Update()
 	debugCamera.Update();
 	//stage.Update();
 
-	ImGui::Text("isHit:%d", isHit(minoX, minoY + 1, minoType, minoAngle));
-	ImGui::Text("isLineFilled:%d", isLineFilled);
-
-	for (int i = 0; i < 22; i++) {
-		ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-			field[i][0], field[i][1], field[i][2], field[i][3], field[i][4], field[i][5],
-			field[i][6], field[i][7], field[i][8], field[i][9], field[i][10], field[i][11]);
-	}
+    ImGui::Text("isHit:%d", isHit(minoX, minoY + 1, minoType, minoAngle));
+    ImGui::Text("deleteNum:%d", deleteNum);
+    ImGui::Text("sam:%d", sam);
+    /*for (int i = 0; i < 22; i++) {
+        ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+            field[i][0], field[i][1], field[i][2], field[i][3], field[i][4], field[i][5],
+            field[i][6], field[i][7], field[i][8], field[i][9], field[i][10], field[i][11]);
+    }
 
 	ImGui::Text("----------------------------------");
 
-	for (int i = 0; i < 22; i++) {
-		ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-			displayBuffer[i][0], displayBuffer[i][1], displayBuffer[i][2], displayBuffer[i][3], displayBuffer[i][4], displayBuffer[i][5],
-			displayBuffer[i][6], displayBuffer[i][7], displayBuffer[i][8], displayBuffer[i][9], displayBuffer[i][10], displayBuffer[i][11]);
-	}
+    for (int i = 0; i < 22; i++) {
+        ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+            displayBuffer[i][0], displayBuffer[i][1], displayBuffer[i][2], displayBuffer[i][3], displayBuffer[i][4],  displayBuffer[i][5],
+            displayBuffer[i][6], displayBuffer[i][7], displayBuffer[i][8], displayBuffer[i][9], displayBuffer[i][10], displayBuffer[i][11]);
+    }*/
+    
+    
 
-	//òg
-	for (int i = 0; i < FIELD_HEIGHT; ++i)
+    //òg
+	/*for (int i = 0; i < FIELD_HEIGHT; ++i)
 	{
 		field[i][0] = 1;
 		field[i][FIELD_WIDTH - 1] = 1;
-	}
+	}*/
 
 	for (int i = 0; i < FIELD_WIDTH; ++i)
 	{
@@ -120,59 +122,54 @@ void GamePlayScene::Update()
 			}
 		}
 
-		if (input->IsTrigger(Key::Space)) {
-			if (!isHit(minoX, minoY, minoType, (minoAngle + 1) % MINO_ANGLE_MAX))
-			{
-				minoAngle = (minoAngle + 1) % MINO_ANGLE_MAX;
-			}
-		}
-		display();
+        if (input->IsTrigger(Key::Space)) {
+            if (!isHit(minoX, minoY, minoType, (minoAngle + 1) % MINO_ANGLE_MAX))
+            {
+                minoAngle = (minoAngle + 1) % MINO_ANGLE_MAX;
+            }
+        }
+        display();
+        
+        if (Mtimer.Update()){
+            Mtimer.Start();
 
-		if (Mtimer.Update())
-		{
-			Mtimer.Start();
+            //ìÆÇ©ÇµÇƒÇÈmino
+            if (isHit(minoX, minoY + 1, minoType, minoAngle)){
+                for (int i = 0; i < MINO_HEIGHT; ++i){
+                    for (int j = 0; j < MINO_WIDTH; ++j){
+                        field[minoY + i][minoX + j] |= minoShapes[minoType][minoAngle][i][j];
+                    }
+                }
+                resetMino();
+            }
+            else{
+                ++minoY;
+            }
 
-			if (isHit(minoX, minoY + 1, minoType, minoAngle))
-			{
-				for (int i = 0; i < MINO_HEIGHT; ++i)
-				{
-					for (int j = 0; j < MINO_WIDTH; ++j)
-					{
-						field[minoY + i][minoX + j] |= minoShapes[minoType][minoAngle][i][j];
-					}
-				}
+            display();
+        }
+    }
 
-				// erase block
-				for (int i = 0; i < FIELD_HEIGHT - 1; ++i)
-				{
+    //ëµÇ¡ÇƒÇ¢ÇÈçsÇíTÇ∑
+    for (int i = FIELD_HEIGHT - 2; i > 0; i--) {//àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
+        //â°àÍóÒÇÃçáåvÇãÅÇﬂÇÈ
+        sam[i] = field[i][0] + field[i][1] + field[i][2] + field[i][3] + field[i][4] + field[i][5] +
+            field[i][6] + field[i][7] + field[i][8] + field[i][9] + field[i][10] + field[i][11];
 
-					for (int j = 1; j < FIELD_WIDTH - 1; ++j)
-					{
-						if (1 != field[i][j])
-						{
-							isLineFilled = false;
-						}
-					}
 
-					if (true == isLineFilled)
-					{
-						for (int j = i; j > 0; --j)
-						{
-							memcpy(field[j], field[j - 1], FIELD_WIDTH);
-						}
-					}
-				}
+        
 
-				resetMino();
-			}
-			else if (!input->IsInput(Key::S))
-			{
-				++minoY;
-			}
-
-			display();
-		}
-	}
+        for (int j = 0; j < FIELD_WIDTH; ++j) {
+            if (sam[i] == 12) {//ëµÇ¡ÇΩÇÁè¡Ç∑
+                field[i][j] = 0;
+                
+                for (int x = i; x > 0; x--) {
+                    field[x + 1][j] = field[x][j];
+                    field[x][j] = 0;
+                }
+            }
+        }
+    }
 }
 
 void GamePlayScene::Draw()
