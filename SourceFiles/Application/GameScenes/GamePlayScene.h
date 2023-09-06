@@ -277,6 +277,8 @@ private:
     int minoY = 0;
 
     bool isflag = true;
+    bool isLineFilled = true;
+    RealTimer Mtimer;
 	//　　　　　　　　y   x
 	Object3d* blocks[22][12];
 

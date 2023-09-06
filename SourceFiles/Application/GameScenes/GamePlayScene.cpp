@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "ModelManager.h"
 #include <imgui.h>
+#include "Timer.h"
 
 void GamePlayScene::Initialize()
 {
@@ -17,12 +18,18 @@ void GamePlayScene::Initialize()
 			blocks[y][x]->worldTransform->translation = { -((float)x - 12 / 2) * 5 * 2, -((float)y - 22 / 2) * 5 * 2, 0.0f };
 		}
 	}
+    Mtimer = 1;
+    Mtimer.Start();
 }
 
 void GamePlayScene::Update()
 {
 	debugCamera.Update();
 	//stage.Update();
+
+    ImGui::Text("isHit:%d", isHit(minoX, minoY + 1, minoType, minoAngle));
+    ImGui::Text("isLineFilled:%d", isLineFilled);
+    
     for (int i = 0; i < 22; i++) {
         ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
             field[i][0], field[i][1], field[i][2], field[i][3], field[i][4], field[i][5],
@@ -54,7 +61,7 @@ void GamePlayScene::Update()
 
 
     //resetMino();
-    time_t t = time(NULL);
+    //time_t t = time(NULL);
 
     if(isflag == true)
     {
@@ -66,14 +73,14 @@ void GamePlayScene::Update()
         }
 
         if (input->IsTrigger(Key::A)) {
-            if (!isHit(minoX - 1, minoY, minoType, minoAngle))
+            if (!isHit(minoX + 1, minoY, minoType, minoAngle))
             {
                 ++minoX;
             }
         }
 
         if (input->IsTrigger(Key::D)) {
-            if (!isHit(minoX + 1, minoY, minoType, minoAngle))
+            if (!isHit(minoX - 1, minoY, minoType, minoAngle))
             {
                 --minoX;
             }
@@ -87,10 +94,12 @@ void GamePlayScene::Update()
         }
         display();
         
+        
 
-        if (time(NULL) != t)
+
+        if (Mtimer.Update())
         {
-            t = time(NULL);
+            Mtimer.Start();
 
             if (isHit(minoX, minoY + 1, minoType, minoAngle))
             {
@@ -105,7 +114,7 @@ void GamePlayScene::Update()
                 // erase block
                 for (int i = 0; i < FIELD_HEIGHT - 1; ++i)
                 {
-                    bool isLineFilled = true;
+                    
                     for (int j = 1; j < FIELD_WIDTH - 1; ++j)
                     {
                         if (1 != field[i][j])
