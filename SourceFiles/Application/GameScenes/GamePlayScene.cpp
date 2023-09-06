@@ -110,42 +110,43 @@ void GamePlayScene::Update()
             display();
         }
     }
-    // 揃ったらけす
-    memcpy(fall, field, sizeof(field));
-    for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//一番下は枠のため
-        for (int j = 0; j < FIELD_WIDTH; ++j) {
 
-            sam += fall[i][j];
-            if (sam >= 12) {//揃った行を探す
-                deleteNum = i;
-            }
+    //// 揃ったらけす
+    //memcpy(fall, field, sizeof(field));
+    //for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//一番下は枠のため
+    //    for (int j = 0; j < FIELD_WIDTH; ++j) {
 
-            //揃った列を消す
-            fall[deleteNum][j] = 0;
+    //        sam += fall[i][j];
+    //        if (sam >= 12) {//揃った行を探す
+    //            deleteNum = i;
+    //        }
 
-            if (j == FIELD_WIDTH - 1) {//一行やったら戻す
-                sam = 0;
+    //        //揃った列を消す
+    //        fall[deleteNum][j] = 0;
 
-            }
-        }
-        //deleteNum = 0;
-    }
+    //        if (j == FIELD_WIDTH - 1) {//一行やったら戻す
+    //            sam = 0;
 
-    //下げる
-    for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
-        for (int j = 0; j < FIELD_WIDTH; ++j) {
+    //        }
+    //    }
+    //    //deleteNum = 0;
+    //}
 
-            if (fall[i][j] == 1 && fall[i + 1][j] == 0) {//もし1のとき,下が0なら
+    ////下げる
+    //for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
+    //    for (int j = 0; j < FIELD_WIDTH; ++j) {
 
-                //置き換える
-                fall[i + 1][j] = 1;
-                fall[i][j] = 0;
-            }
+    //        if (fall[i][j] == 1 && fall[i + 1][j] == 0) {//もし1のとき,下が0なら
 
-        }
-    }
+    //            //置き換える
+    //            fall[i + 1][j] = 1;
+    //            fall[i][j] = 0;
+    //        }
 
-    memcpy(field, fall, sizeof(field));
+    //    }
+    //}
+
+    //memcpy(field, fall, sizeof(field));
 }
 
 void GamePlayScene::Draw()
@@ -160,40 +161,40 @@ void GamePlayScene::display()
     
 
 
-    //揃ったら消す
-    for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//一番下は枠のため
-        for (int j = 0; j < FIELD_WIDTH; ++j) {
+    ////揃ったら消す
+    //for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {//一番下は枠のため
+    //    for (int j = 0; j < FIELD_WIDTH; ++j) {
 
-            sam += displayBuffer[i][j];
-            if (sam >= 12) {//揃った行を探す
-                deleteNum = i;
-            }
+    //        sam += displayBuffer[i][j];
+    //        if (sam >= 12) {//揃った行を探す
+    //            deleteNum = i;
+    //        }
 
-            //揃った列を消す
-            displayBuffer[deleteNum][j] = 0;
-            field[deleteNum][j] = 0;
-            if (j == FIELD_WIDTH - 1) {//一行やったら戻す
-                sam = 0;
-                
-            }
-        }
-        deleteNum = 0;
-    }
+    //        //揃った列を消す
+    //        displayBuffer[deleteNum][j] = 0;
+    //        field[deleteNum][j] = 0;
+    //        if (j == FIELD_WIDTH - 1) {//一行やったら戻す
+    //            sam = 0;
+    //            
+    //        }
+    //    }
+    //    deleteNum = 0;
+    //}
 
-    for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
-        for (int j = 0; j < FIELD_WIDTH; ++j) {
+    //for (int i = 0; i < FIELD_HEIGHT - 1; ++i) {
+    //    for (int j = 0; j < FIELD_WIDTH; ++j) {
 
-            if (displayBuffer[i][j] == 1 && displayBuffer[i + 1][j] == 0) {//もし1のとき,下が0なら
-                
-                //置き換える
-                displayBuffer[i + 1][j] = 1;
-                displayBuffer[i][j] = 0;
-                field[i + 1][j] = 1;
-                field[i][j] = 0;
-            }
+    //        if (displayBuffer[i][j] == 1 && displayBuffer[i + 1][j] == 0) {//もし1のとき,下が0なら
+    //            
+    //            //置き換える
+    //            displayBuffer[i + 1][j] = 1;
+    //            displayBuffer[i][j] = 0;
+    //            field[i + 1][j] = 1;
+    //            field[i][j] = 0;
+    //        }
 
-        }
-    }
+    //    }
+    //}
 
 
     for (int i = 0; i < MINO_HEIGHT; ++i)
