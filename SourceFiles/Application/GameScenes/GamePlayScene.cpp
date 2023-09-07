@@ -13,9 +13,13 @@ void GamePlayScene::Initialize()
 	//stage.Initialize();
 	for (int y = 0; y < 22; y++) {
 		for (int x = 0; x < 12; x++) {
-			blocks[y][x] = ModelManager::Create("cube");
-            blocks[y][x]->worldTransform->scale *= 4.8f;
-			blocks[y][x]->worldTransform->translation = { -((float)x - 12 / 2) * 5 * 2, -((float)y - 22 / 2) * 5 * 2, 0.0f };
+			blocks[y][x] = ModelManager::Create("block");
+            blocks[y][x]->worldTransform->scale *= 10.0f;
+			//blocks[y][x]->worldTransform->translation = { -((float)x - 12 / 2) * 5 * 2, -((float)y - 22 / 2) * 5 * 2, 0.0f };//•½–Ê
+            
+            //‰~’Œ‚É‚·‚é
+            blocks[y][x]->worldTransform->translation = { 0.0f, -(float)y * 5.0f , 0.0f };
+            blocks[y][x]->worldTransform->rotation.y = x * 30*PI/180;
 		}
 	}
     Mtimer = 1;
@@ -47,12 +51,6 @@ void GamePlayScene::Update()
     
 
     //˜g
-	/*for (int i = 0; i < FIELD_HEIGHT; ++i)
-	{
-		field[i][0] = 1;
-		field[i][FIELD_WIDTH - 1] = 1;
-	}*/
-
 	for (int i = 0; i < FIELD_WIDTH; ++i)
 	{
 		field[FIELD_HEIGHT - 1][i] = 1;
@@ -141,24 +139,19 @@ void GamePlayScene::display()
 {
     memcpy(displayBuffer, field, sizeof(field));
 
-    for (int i = 0; i < MINO_HEIGHT; ++i)
-    {
-        for (int j = 0; j < MINO_WIDTH; ++j)
-        {
+    for (int i = 0; i < MINO_HEIGHT; ++i){
+        for (int j = 0; j < MINO_WIDTH; ++j){
             displayBuffer[minoY + i][minoX + j] |= minoShapes[minoType][minoAngle][i][j];
         }
     }
 
-    for (int i = 0; i < FIELD_HEIGHT; ++i)
-    {
-        for (int j = 0; j < FIELD_WIDTH; ++j)
-        {
-            if (1 == displayBuffer[i][j])
-            {
+    //mino‚ÌF‚ð•Ï‚¦‚é
+    for (int i = 0; i < FIELD_HEIGHT; ++i){
+        for (int j = 0; j < FIELD_WIDTH; ++j){
+            if (1 == displayBuffer[i][j]){
                 blocks[i][j]->material.GetSprite(TexType::Main)->color = { 0.3f, 0.0f, 0.0f, 1.0f };
             }
-            else
-            {
+            else{
                 blocks[i][j]->material.GetSprite(TexType::Main)->color = { 0.3f, 0.3f, 0.3f, 1.0f };
             }
         }
@@ -167,12 +160,9 @@ void GamePlayScene::display()
 
 bool GamePlayScene::isHit(int argMinoX, int argMinoY, int argMinoType, int argMinoAngle)
 {
-	for (int i = 0; i < MINO_HEIGHT; ++i)
-	{
-		for (int j = 0; j < MINO_WIDTH; ++j)
-		{
-			if (minoShapes[argMinoType][argMinoAngle][i][j] && field[argMinoY + i][argMinoX + j])
-			{
+	for (int i = 0; i < MINO_HEIGHT; ++i){
+		for (int j = 0; j < MINO_WIDTH; ++j){
+			if (minoShapes[argMinoType][argMinoAngle][i][j] && field[argMinoY + i][argMinoX + j]){
 				return true;
 			}
 		}
