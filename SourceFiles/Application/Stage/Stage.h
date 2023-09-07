@@ -257,8 +257,8 @@ private:
 	RealTimer fallTimer = 0.03f;
 	int holdTimeA = 0;
 	int holdTimeD = 0;
-	//　　　　　　　　y   x
-	Object3d* blocks[22][12];
+	//　　　　　　y   x
+	Block blocks[22][12];
 
 	int field[FIELD_HEIGHT][FIELD_WIDTH] = { 0 };
 

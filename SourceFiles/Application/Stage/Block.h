@@ -8,17 +8,13 @@
 class Block
 {
 private:
-	FrameTimer fallTimer; // 落下するインターバル
-	Input* input = nullptr; // Inputのポインタ
-	std::vector<Vector2> blockArr; // ローカル座標でのブロック配置
-	Vector2 blockPos; // 中心の位置
-	Object3d* parent;
-	std::vector<Object3d*> models{};
+	static Input* input; // Inputのポインタ
+	Object3d* object = nullptr;
 
 	void Move();
 
 public:
-	void Initialize();
+	void Initialize(float x, float y);
 	void Update();
-	std::vector<Vector2> GetWorldPos();
+	Sprite* GetMainSprite() { return object->material.GetSprite(TexType::Main); }
 };

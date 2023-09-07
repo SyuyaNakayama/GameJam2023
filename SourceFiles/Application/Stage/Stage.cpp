@@ -4,13 +4,9 @@
 
 void Stage::Initialize()
 {
-	//block.Initialize();
-
 	for (int y = 0; y < 22; y++) {
 		for (int x = 0; x < 12; x++) {
-			blocks[y][x] = ModelManager::Create("cube");
-			blocks[y][x]->worldTransform->scale *= 4.8f;
-			blocks[y][x]->worldTransform->translation = { -((float)x - 12 / 2) * 5 * 2, -((float)y - 22 / 2) * 5 * 2, 0.0f };
+			blocks[y][x].Initialize((float)x, (float)y);
 		}
 	}
 	Mtimer = 1;
@@ -37,8 +33,6 @@ void Stage::Update()
 			displayBuffer[i][0], displayBuffer[i][1], displayBuffer[i][2], displayBuffer[i][3], displayBuffer[i][4],  displayBuffer[i][5],
 			displayBuffer[i][6], displayBuffer[i][7], displayBuffer[i][8], displayBuffer[i][9], displayBuffer[i][10], displayBuffer[i][11]);
 	}*/
-
-
 
 	//˜g
 	/*for (int i = 0; i < FIELD_HEIGHT; ++i)
@@ -181,11 +175,11 @@ void Stage::Display()
 		{
 			if (1 == displayBuffer[i][j])
 			{
-				blocks[i][j]->material.GetSprite(TexType::Main)->color = { 0.3f, 0.0f, 0.0f, 1.0f };
+				blocks[i][j].GetMainSprite()->color = {0.3f, 0.0f, 0.0f, 1.0f};
 			}
 			else
 			{
-				blocks[i][j]->material.GetSprite(TexType::Main)->color = { 0.3f, 0.3f, 0.3f, 1.0f };
+				blocks[i][j].GetMainSprite()->color = { 0.3f, 0.3f, 0.3f, 1.0f };
 			}
 		}
 	}
