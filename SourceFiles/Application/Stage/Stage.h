@@ -5,8 +5,6 @@
 class Stage
 {
 private:
-	std::array<std::array<bool, 12>, 15> stage; // 縦15 * 横12マス
-	Block block; // 現在落ちているブロック
 	static const int FIELD_WIDTH = 12;
 	static const int FIELD_HEIGHT = 22;
 
@@ -257,14 +255,10 @@ private:
 	RealTimer fallTimer = 0.03f;
 	int holdTimeA = 0;
 	int holdTimeD = 0;
-	//　　　　　　y   x
-	Block blocks[22][12];
-
-	int field[FIELD_HEIGHT][FIELD_WIDTH] = { 0 };
-
-	int displayBuffer[FIELD_HEIGHT][FIELD_WIDTH] = { 0 };
-
-	int fall[FIELD_HEIGHT][FIELD_WIDTH] = { 0 };
+	std::array<std::array<Block, FIELD_WIDTH>, FIELD_HEIGHT> blocks;
+	std::array<std::array<int, FIELD_WIDTH>, FIELD_HEIGHT> field;
+	std::array<std::array<int, FIELD_WIDTH>, FIELD_HEIGHT> displayBuffer;
+	std::array<std::array<int, FIELD_WIDTH>, FIELD_HEIGHT> fall;
 
 	int sam[21];
 	int deleteNum;

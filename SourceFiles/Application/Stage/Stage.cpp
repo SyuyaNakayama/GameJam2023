@@ -159,7 +159,7 @@ void Stage::Update()
 
 void Stage::Display()
 {
-	memcpy(displayBuffer, field, sizeof(field));
+	displayBuffer = field;
 
 	for (int i = 0; i < MINO_HEIGHT; ++i)
 	{
@@ -191,6 +191,7 @@ bool Stage::IsHit(int argMinoX, int argMinoY, int argMinoType, int argMinoAngle)
 	{
 		for (int j = 0; j < MINO_WIDTH; ++j)
 		{
+			if (argMinoY + i >= FIELD_HEIGHT || argMinoX + j >= FIELD_WIDTH) { return true; }
 			if (minoShapes[argMinoType][argMinoAngle][i][j] && field[argMinoY + i][argMinoX + j])
 			{
 				return true;
