@@ -71,6 +71,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Skydome;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\GameScenes;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/IGNORE:4204 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -97,6 +98,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard_C>Default</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir)SourceFiles\Engine\2d;$(ProjectDir)SourceFiles\Engine\3d\Camera;$(ProjectDir)SourceFiles\Engine\3d\Object;$(ProjectDir)SourceFiles\Engine\Audio;$(ProjectDir)SourceFiles\Engine\DirectX;$(ProjectDir)SourceFiles\Engine\Input;$(ProjectDir)SourceFiles\Engine\Framework;$(ProjectDir)SourceFiles\Engine\Functions;$(ProjectDir)SourceFiles\Engine\Json;$(ProjectDir)SourceFiles\Engine\Light;$(ProjectDir)SourceFiles\Engine\Math;$(ProjectDir)SourceFiles\Engine\Skydome;$(ProjectDir)SourceFiles\Engine\Particle;$(ProjectDir)SourceFiles\Engine\Physics;$(ProjectDir)SourceFiles\Engine\Scene;$(ProjectDir)SourceFiles\Engine\WinApp;$(ProjectDir)SourceFiles\Application\GameScenes;$(ProjectDir)SourceFiles\Application\MyGame;$(ProjectDir)SourceFiles\Application\Stage;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/IGNORE:4204 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -174,6 +176,7 @@
     <ClCompile Include="SourceFiles\Application\MyGame\MyGame.cpp" />
     <ClCompile Include="SourceFiles\Application\Stage\Block.cpp" />
     <ClCompile Include="SourceFiles\Application\Stage\Stage.cpp" />
+    <ClCompile Include="SourceFiles\Engine\Framework\Framework.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Application\GameScenes\GamePlayScene.h" />

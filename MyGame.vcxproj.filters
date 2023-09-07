@@ -159,6 +159,9 @@
     <ClCompile Include="SourceFiles\Application\Stage\Block.cpp">
       <Filter>ソース ファイル\Application\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Engine\Framework\Framework.cpp">
+      <Filter>ソース ファイル\Engine\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\2d\ImGuiManager.h">

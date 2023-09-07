@@ -6,7 +6,7 @@
 
 void GamePlayScene::Initialize()
 {
-	debugCamera.Initialize({ 12,20 },200);
+	debugCamera.Initialize({ 12,20 }, 300);
 	viewProjection.Initialize();
 	ModelManager::SetViewProjection(&debugCamera);
 
@@ -22,8 +22,8 @@ void GamePlayScene::Initialize()
             blocks[y][x]->worldTransform->rotation.y = x * 30*PI/180;
 		}
 	}
-    Mtimer = 1;
-    Mtimer.Start();
+	Mtimer = 1;
+	Mtimer.Start();
 }
 
 void GamePlayScene::Update()
@@ -40,7 +40,7 @@ void GamePlayScene::Update()
             field[i][6], field[i][7], field[i][8], field[i][9], field[i][10], field[i][11]);
     }
 
-    ImGui::Text("----------------------------------");
+	ImGui::Text("----------------------------------");
 
     for (int i = 0; i < 22; i++) {
         ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
@@ -56,29 +56,69 @@ void GamePlayScene::Update()
 		field[FIELD_HEIGHT - 1][i] = 1;
 	}
 
-    //mino‚ð“®‚©‚·
-    if(isflag == true)
-    {
-        if (input->IsTrigger(Key::S)) {
-            if (!isHit(minoX, minoY + 1, minoType, minoAngle))
-            {
-                ++minoY;
-            }
-        }
+	if (isflag == true)
+	{
+		if (input->IsInput(Key::S)) {
+			if (input->IsTrigger(Key::S)) { fallTimer.Start(); }
+			if (fallTimer.Update() && !isHit(minoX, minoY + 1, minoType, minoAngle))
+			{
+				++minoY;
+			}
+		}
 
-        if (input->IsTrigger(Key::A)) {
-            if (!isHit(minoX + 1, minoY, minoType, minoAngle))
-            {
-                ++minoX;
-            }
-        }
+		if (input->IsInput(Key::A)) {
+			holdTimeA++;
+			
+			if (holdTimeA <= 10)
+			{
+				if (input->IsTrigger(Key::A)&&!isHit(minoX + 1, minoY, minoType, minoAngle))
+				{
+					++minoX;
+				}
+			}
+			else
+			{
+				if (!isHit(minoX + 1, minoY, minoType, minoAngle))
+				{
+					++minoX;
+				}
+			}
+		}
+		else
+		{
+			holdTimeA = 0; 
+		}
 
-        if (input->IsTrigger(Key::D)) {
-            if (!isHit(minoX - 1, minoY, minoType, minoAngle))
-            {
-                --minoX;
-            }
-        }
+		if (input->IsInput(Key::D)) {
+			holdTimeD++;
+
+			if (holdTimeD <= 10)
+			{
+				if (input->IsTrigger(Key::D) && !isHit(minoX - 1, minoY, minoType, minoAngle))
+				{
+					--minoX;
+				}
+			}
+			else
+			{
+				if (!isHit(minoX - 1, minoY, minoType, minoAngle))
+				{
+					--minoX;
+				}
+			}
+		}
+		else
+		{
+			holdTimeD = 0;
+		}
+
+		if (input->IsTrigger(Key::W))
+		{
+			while (!isHit(minoX, minoY + 1, minoType, minoAngle))
+			{
+				++minoY;
+			}
+		}
 
         if (input->IsTrigger(Key::Space)) {
             if (!isHit(minoX, minoY, minoType, (minoAngle + 1) % MINO_ANGLE_MAX))
@@ -137,7 +177,7 @@ void GamePlayScene::Draw()
 
 void GamePlayScene::display()
 {
-    memcpy(displayBuffer, field, sizeof(field));
+	memcpy(displayBuffer, field, sizeof(field));
 
     for (int i = 0; i < MINO_HEIGHT; ++i){
         for (int j = 0; j < MINO_WIDTH; ++j){
@@ -172,8 +212,8 @@ bool GamePlayScene::isHit(int argMinoX, int argMinoY, int argMinoType, int argMi
 
 void GamePlayScene::resetMino()
 {
-    minoX = 5;
-    minoY = 0;
-    minoType = rand() % MINO_TYPE_MAX;
-    minoAngle = rand() % MINO_ANGLE_MAX;
+	minoX = 5;
+	minoY = 0;
+	minoType = rand() % MINO_TYPE_MAX;
+	minoAngle = rand() % MINO_ANGLE_MAX;
 }
