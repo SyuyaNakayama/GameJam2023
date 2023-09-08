@@ -13,9 +13,12 @@ int Loop(int num, int max)
 
 void Block::Initialize(float x, float y)
 {
-	object = ModelManager::Create("cube");
-	object->worldTransform->scale *= 4.8f;
-	object->worldTransform->translation = { -(x - 12 / 2) * 5 * 2, -(y - 22 / 2) * 5 * 2 };
+	object = ModelManager::Create("block");
+	object->worldTransform->scale *= 10.0f;
+
+	//‰~’Œ‚É‚·‚é
+	object->worldTransform->translation = { 0.0f, -(float)y * 5.0f , 0.0f };
+	object->worldTransform->rotation.y = x * Angle(30);
 }
 
 void Block::Move()
