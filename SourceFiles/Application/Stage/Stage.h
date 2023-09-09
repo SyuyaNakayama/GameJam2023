@@ -1,6 +1,8 @@
 #pragma once
 #include <array>
 #include "Block.h"
+#include "Input.h"
+#include "Timer.h"
 
 class Stage
 {
@@ -249,8 +251,6 @@ private:
 	int minoX = 0;
 	int minoY = 0;
 
-	bool isflag = true;
-	//bool isLineFilled = true;
 	RealTimer Mtimer;
 	RealTimer fallTimer = 0.03f;
 	int holdTimeA = 0;
