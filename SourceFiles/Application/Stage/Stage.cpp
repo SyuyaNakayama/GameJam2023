@@ -48,6 +48,9 @@ void Stage::Update()
 		field[i][FIELD_WIDTH - 1] = 1;
 	}*/
 
+	//—”¶¬
+	srand(time(nullptr));
+
 	for (int i = 0; i < FIELD_WIDTH; ++i)
 	{
 		field[FIELD_HEIGHT - 1][i] = 1;
