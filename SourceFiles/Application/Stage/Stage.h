@@ -258,13 +258,12 @@ private:
 	std::array<std::array<Block, FIELD_WIDTH>, FIELD_HEIGHT> blocks;
 	std::array<std::array<int, FIELD_WIDTH>, FIELD_HEIGHT> field;
 	std::array<std::array<int, FIELD_WIDTH>, FIELD_HEIGHT> displayBuffer;
-	std::array<std::array<int, FIELD_WIDTH>, FIELD_HEIGHT> fall;
 
-	int sam[21];
+	std::array<int, 21> sum;
 	int deleteNum;
 
 	void Display();
-	bool IsHit(int argMinoX, int argMinoY, int argMinoType, int argMinoAngle);
+	bool IsHit(int argMinoX, int argMinoY, int argMinoAngle);
 	void ResetMino();
 
 public:

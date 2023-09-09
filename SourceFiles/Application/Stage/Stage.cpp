@@ -2,6 +2,8 @@
 #include <imgui.h>
 #include "Timer.h"
 
+int Loop(int num, int max);
+
 void Stage::Initialize()
 {
 	for (int y = 0; y < 22; y++) {
@@ -17,9 +19,14 @@ void Stage::Update()
 {
 	//block.Update();
 
-	ImGui::Text("IsHit:%d", IsHit(minoX, minoY + 1, minoType, minoAngle));
+	ImGui::Text("IsHit:%d", IsHit(minoX, minoY + 1, minoAngle));
 	ImGui::Text("deleteNum:%d", deleteNum);
-	ImGui::Text("sam:%d", sam);
+	ImGui::Text("minoX:%d", minoX);
+
+	for (size_t i = 0; i < sum.size(); i++)
+	{
+		ImGui::Text("sum[%d]:%d", i, sum[i]);
+	}
 	/*for (int i = 0; i < 22; i++) {
 		ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
 			field[i][0], field[i][1], field[i][2], field[i][3], field[i][4], field[i][5],
@@ -48,70 +55,38 @@ void Stage::Update()
 
 	if (isflag == true)
 	{
-		if (input->IsInput(Key::S)) {
-			if (input->IsTrigger(Key::S)) { fallTimer.Start(); }
-			if (fallTimer.Update() && !IsHit(minoX, minoY + 1, minoType, minoAngle))
-			{
-				++minoY;
-			}
-		}
+		// óéÇ∆Ç∑
+		bool isMinoMoveY = false;
+		if (input->IsTrigger(Key::S)) { fallTimer.Start(); }
+		isMinoMoveY = fallTimer.Update() && !IsHit(minoX, minoY + 1, minoAngle) && input->IsInput(Key::S);
+		if (isMinoMoveY) { ++minoY; }
 
-		if (input->IsInput(Key::A)) {
-			holdTimeA++;
+		int minoMoveX = 0;
+		bool isMinoMoveX = false;
+		if (input->IsInput(Key::A)) { holdTimeA++; }
+		else { holdTimeA = 0; }
+		isMinoMoveX = !IsHit(Loop(minoX + 1, 12), minoY, minoAngle);
+		isMinoMoveX &= (holdTimeA <= 30 && input->IsTrigger(Key::A)) || (holdTimeA > 30 && holdTimeA % 4 == 0);
+		if (isMinoMoveX) { minoMoveX++; }
 
-			if (holdTimeA <= 10)
-			{
-				if (input->IsTrigger(Key::A) && !IsHit(minoX + 1, minoY, minoType, minoAngle))
-				{
-					++minoX;
-				}
-			}
-			else
-			{
-				if (!IsHit(minoX + 1, minoY, minoType, minoAngle))
-				{
-					++minoX;
-				}
-			}
-		}
-		else
-		{
-			holdTimeA = 0;
-		}
+		if (input->IsInput(Key::D)) { holdTimeD++; }
+		else { holdTimeD = 0; }
+		isMinoMoveX = !IsHit(Loop(minoX + 1, 12), minoY, minoAngle);
+		isMinoMoveX &= (holdTimeD <= 30 && input->IsTrigger(Key::D)) || (holdTimeD > 30 && holdTimeD % 4 == 0);
+		if (isMinoMoveX) { minoMoveX--; }
 
-		if (input->IsInput(Key::D)) {
-			holdTimeD++;
-
-			if (holdTimeD <= 10)
-			{
-				if (input->IsTrigger(Key::D) && !IsHit(minoX - 1, minoY, minoType, minoAngle))
-				{
-					--minoX;
-				}
-			}
-			else
-			{
-				if (!IsHit(minoX - 1, minoY, minoType, minoAngle))
-				{
-					--minoX;
-				}
-			}
-		}
-		else
-		{
-			holdTimeD = 0;
-		}
+		minoX = Loop(minoX + minoMoveX, 12);
 
 		if (input->IsTrigger(Key::W))
 		{
-			while (!IsHit(minoX, minoY + 1, minoType, minoAngle))
+			while (!IsHit(minoX, minoY + 1, minoAngle))
 			{
 				++minoY;
 			}
 		}
 
 		if (input->IsTrigger(Key::Space)) {
-			if (!IsHit(minoX, minoY, minoType, (minoAngle + 1) % (int)MinoAngle::Max))
+			if (!IsHit(minoX, minoY, (minoAngle + 1) % (int)MinoAngle::Max))
 			{
 				minoAngle = (minoAngle + 1) % (int)MinoAngle::Max;
 			}
@@ -122,10 +97,10 @@ void Stage::Update()
 			Mtimer.Start();
 
 			//ìÆÇ©ÇµÇƒÇÈmino
-			if (IsHit(minoX, minoY + 1, minoType, minoAngle)) {
+			if (IsHit(Loop(minoX, 12), minoY + 1, minoAngle)) {
 				for (int i = 0; i < MINO_HEIGHT; ++i) {
 					for (int j = 0; j < MINO_WIDTH; ++j) {
-						field[minoY + i][minoX + j] |= minoShapes[minoType][minoAngle][i][j];
+						field[minoY + i][Loop(minoX + j, 12)] |= minoShapes[minoType][minoAngle][i][j];
 					}
 				}
 				ResetMino();
@@ -139,19 +114,18 @@ void Stage::Update()
 	}
 
 	//ëµÇ¡ÇƒÇ¢ÇÈçsÇíTÇ∑
-	for (int i = FIELD_HEIGHT - 2; i > 0; i--) {//àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
+	for (int i = FIELD_HEIGHT - 2; i > 0; i--) { //àÍî‘â∫ÇÕògÇÃÇΩÇﬂ
 		//â°àÍóÒÇÃçáåvÇãÅÇﬂÇÈ
-		sam[i] = field[i][0] + field[i][1] + field[i][2] + field[i][3] + field[i][4] + field[i][5] +
-			field[i][6] + field[i][7] + field[i][8] + field[i][9] + field[i][10] + field[i][11];
+		sum[i] = std::accumulate(field[i].begin(), field[i].end(), 0);
 
 		for (int j = 0; j < FIELD_WIDTH; ++j) {
-			if (sam[i] == 12) {//ëµÇ¡ÇΩÇÁè¡Ç∑
-				field[i][j] = 0;
+			if (sum[i] != 12) { continue; }
+			//ëµÇ¡ÇΩÇÁè¡Ç∑
+			field[i][j] = 0;
 
-				for (int x = i; x > 0; x--) {
-					field[x + 1][j] = field[x][j];
-					field[x][j] = 0;
-				}
+			for (int x = i; x > 0; x--) {
+				field[x + 1][j] = field[x][j];
+				field[x][j] = 0;
 			}
 		}
 	}
@@ -165,7 +139,7 @@ void Stage::Display()
 	{
 		for (int j = 0; j < MINO_WIDTH; ++j)
 		{
-			displayBuffer[minoY + i][minoX + j] |= minoShapes[minoType][minoAngle][i][j];
+			displayBuffer[minoY + i][Loop(minoX + j, 12)] |= minoShapes[minoType][minoAngle][i][j];
 		}
 	}
 
@@ -175,7 +149,7 @@ void Stage::Display()
 		{
 			if (1 == displayBuffer[i][j])
 			{
-				blocks[i][j].GetMainSprite()->color = {0.3f, 0.0f, 0.0f, 1.0f};
+				blocks[i][j].GetMainSprite()->color = { 0.3f, 0.0f, 0.0f, 1.0f };
 			}
 			else
 			{
@@ -185,14 +159,14 @@ void Stage::Display()
 	}
 }
 
-bool Stage::IsHit(int argMinoX, int argMinoY, int argMinoType, int argMinoAngle)
+bool Stage::IsHit(int argMinoX, int argMinoY, int argMinoAngle)
 {
 	for (int i = 0; i < MINO_HEIGHT; ++i)
 	{
 		for (int j = 0; j < MINO_WIDTH; ++j)
 		{
 			if (argMinoY + i >= FIELD_HEIGHT || argMinoX + j >= FIELD_WIDTH) { return true; }
-			if (minoShapes[argMinoType][argMinoAngle][i][j] && field[argMinoY + i][argMinoX + j])
+			if (minoShapes[minoType][argMinoAngle][i][j] && field[argMinoY + i][argMinoX + j])
 			{
 				return true;
 			}
