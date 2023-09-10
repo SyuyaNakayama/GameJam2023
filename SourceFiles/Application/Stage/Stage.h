@@ -262,6 +262,9 @@ private:
 	std::array<int, 21> sum;
 	int deleteNum;
 
+	bool isEnd = false;//I—¹ƒtƒ‰ƒO
+	int score;
+
 	void Display();
 	bool IsHit(int argMinoX, int argMinoY, int argMinoAngle);
 	void ResetMino();

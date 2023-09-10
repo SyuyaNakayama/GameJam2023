@@ -24,6 +24,8 @@ void Stage::Initialize()
 
 void Stage::Update()
 {
+	ImGui::Text("isEnd:%d", isEnd);
+	ImGui::Text("score:%d", score);
 	ImGui::Text("IsHit:%d", IsHit(minoX, minoY + 1, minoAngle));
 	ImGui::Text("deleteNum:%d", deleteNum);
 	ImGui::Text("minoX:%d", minoX);
@@ -46,16 +48,11 @@ void Stage::Update()
 			displayBuffer[i][6], displayBuffer[i][7], displayBuffer[i][8], displayBuffer[i][9], displayBuffer[i][10], displayBuffer[i][11]);
 	}*/
 
-	//˜g
-	/*for (int i = 0; i < FIELD_HEIGHT; ++i)
-	{
-		field[i][0] = 1;
-		field[i][FIELD_WIDTH - 1] = 1;
-	}*/
-
+	
 	//—”¶¬
 	srand(time(nullptr));
 
+	//°
 	for (int i = 0; i < FIELD_WIDTH; ++i)
 	{
 		field[FIELD_HEIGHT - 1][i] = 1;
@@ -120,18 +117,21 @@ void Stage::Update()
 	for (int i = FIELD_HEIGHT - 2; i > 0; i--) { //ˆê”Ô‰º‚Í˜g‚Ì‚½‚ß
 		//‰¡ˆê—ñ‚Ì‡Œv‚ğ‹‚ß‚é
 		sum[i] = std::accumulate(field[i].begin(), field[i].end(), 0);
-
+		
 		for (int j = 0; j < FIELD_WIDTH; ++j) {
 			if (sum[i] != 12) { continue; }
 			//‘µ‚Á‚½‚çÁ‚·
 			field[i][j] = 0;
-
+			score += 100;
 			for (int x = i; x > 0; x--) {
 				field[x + 1][j] = field[x][j];
 				field[x][j] = 0;
 			}
 		}
 	}
+
+	//ˆê”Ôã‚Ü‚ÅÏ‚İ‚ ‚ª‚Á‚½‚çI—¹
+	if (sum[1] > 0) { isEnd = true; }
 }
 
 void Stage::Display()
