@@ -14,6 +14,12 @@ void GamePlayScene::Update()
 {
 	debugCamera.Update();
 	stage.Update();
+
+	if (stage.IsEnd()) 
+	{
+		sceneManager->ChangeScene(Scene::Result); 
+		ModelManager::ClearObjects();
+	}
 }
 
 void GamePlayScene::Draw()

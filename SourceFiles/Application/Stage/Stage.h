@@ -250,8 +250,9 @@ private:
 	int minoAngle = 0;
 	int minoX = 0;
 	int minoY = 0;
+	int shadowY = 0;
 
-	RealTimer Mtimer;
+	RealTimer Mtimer = 0.1;
 	RealTimer fallTimer = 0.03f;
 	int holdTimeA = 0;
 	int holdTimeD = 0;
@@ -262,14 +263,17 @@ private:
 	std::array<int, 21> sum;
 	int deleteNum;
 
-	bool isEnd = false;//終了フラグ
-	int score;
+	bool isEnd = false; //終了フラグ
+	int score = 0;
 
 	void Display();
 	bool IsHit(int argMinoX, int argMinoY, int argMinoAngle);
 	void ResetMino();
+	void ShowImGui();
+	void MoveMino();
 
 public:
 	void Initialize();
 	void Update();
+	bool IsEnd() { return isEnd; }
 };

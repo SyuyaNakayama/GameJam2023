@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceFiles\Application\GameScenes\GamePlayScene.cpp" />
+    <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\SceneFactory.cpp" />
     <ClCompile Include="SourceFiles\Application\GameScenes\TitleScene.cpp" />
     <ClCompile Include="SourceFiles\Application\MyGame\MyGame.cpp" />
@@ -180,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Application\GameScenes\GamePlayScene.h" />
+    <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\Scene.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\SceneFactory.h" />
     <ClInclude Include="SourceFiles\Application\GameScenes\TitleScene.h" />
