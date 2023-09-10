@@ -34,6 +34,6 @@ float4 main(VSOutput input) : SV_TARGET
 	// シェーディングによる色
     float4 shadecolor = float4(ambient, 1.0f);
     shadecolor.rgb += lightGroup.ComputeLightEffect(lightData, material);
-    shadecolor.a = 1.0f;
+    shadecolor.a = mainTexColor.a;
     return shadecolor;
 }
