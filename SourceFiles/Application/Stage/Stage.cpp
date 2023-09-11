@@ -59,18 +59,18 @@ void Stage::Update()
 		// â°àÍóÒÇÃçáåvÇãÅÇﬂÇÈ
 		sum[i] = std::accumulate(field[i].begin(), field[i].end(), 0);
 
-		if (sum[i] != 12) { continue; }
+		if (sum[i] != 12) { continue; } // ëµÇ¡ÇΩéû
 		score += 100;
 		// É~Émâ¡ë¨
 		if (Mtimer.GetInterval() >= 0.1f)
 		{
-			Mtimer = Mtimer.GetInterval() - (float)(score / 500) * 0.05;
 			level = score / 500;
+			Mtimer = 1.0f - (float)level * 0.05;
 		}
-		// ëµÇ¡ÇΩÇÁè¡Ç∑
+		// É~ÉmÇè¡Ç∑
 		for (int j = 0; j < FIELD_WIDTH; ++j) {
 			field[i][j] = 0;
-			for (int x = i; x > 0; x--) {
+			for (int x = i - 1; x > 0; x--) {
 				field[x + 1][j] = field[x][j];
 				field[x][j] = 0;
 			}
@@ -210,10 +210,10 @@ void Stage::MoveMino()
 		}
 	}
 
-	ViewProjection* pCamera = ModelManager::GetViewProjection();
-	pCamera->eye = Quaternion::RotateVector(
-		{ 0,0,-150 }, Quaternion::MakeAxisAngle(
-			Vector3::MakeAxis(Axis::Y), (mino.posX - 1) * Angle(30)));
+	//ViewProjection* pCamera = ModelManager::GetViewProjection();
+	//pCamera->eye = Quaternion::RotateVector(
+	//	{ 0,0,-150 }, Quaternion::MakeAxisAngle(
+	//		Vector3::MakeAxis(Axis::Y), (mino.posX - 1) * Angle(30)));
 }
 
 void Mino::Reset()

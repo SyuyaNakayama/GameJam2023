@@ -8,8 +8,8 @@ void GamePlayScene::Initialize()
 	debugCamera.Initialize({ 55,-55 }, 300);
 	viewProjection.Initialize();
 	viewProjection.eye.z = -150;
-	//ModelManager::SetViewProjection(&debugCamera);
-	ModelManager::SetViewProjection(&viewProjection);
+	ModelManager::SetViewProjection(&debugCamera);
+	//ModelManager::SetViewProjection(&viewProjection);
 	stage.Initialize();
 	SpriteInitialize();
 }
