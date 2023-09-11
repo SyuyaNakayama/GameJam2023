@@ -9,9 +9,9 @@ class Stage
 private:
 	static const int FIELD_WIDTH = 12;
 	static const int FIELD_HEIGHT = 22;
-
 	static const int MINO_WIDTH = 4;
 	static const int MINO_HEIGHT = 4;
+	static const int TO_MOVE_TIME = 10;
 
 	Input* input = Input::GetInstance();
 
@@ -250,8 +250,10 @@ private:
 	int minoAngle = 0;
 	int minoX = 0;
 	int minoY = 0;
+	int shadowY = 0;
+	bool isEarth = false;
 
-	RealTimer Mtimer;
+	RealTimer Mtimer = 1.0f;
 	RealTimer fallTimer = 0.03f;
 	int holdTimeA = 0;
 	int holdTimeD = 0;
@@ -262,14 +264,18 @@ private:
 	std::array<int, 21> sum;
 	int deleteNum;
 
-	bool isEnd = false;//終了フラグ
-	int score;
+	bool isEnd = false; //終了フラグ
+	int score = 0;
 
 	void Display();
 	bool IsHit(int argMinoX, int argMinoY, int argMinoAngle);
 	void ResetMino();
+	void ShowImGui();
+	void MoveMino();
+	void MinoSet();
 
 public:
 	void Initialize();
 	void Update();
+	bool IsEnd() { return isEnd; }
 };

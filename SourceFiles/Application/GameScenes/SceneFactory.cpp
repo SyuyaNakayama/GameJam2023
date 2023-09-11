@@ -1,6 +1,7 @@
 #include "SceneFactory.h"
 #include "GamePlayScene.h"
 #include "TitleScene.h"
+#include "ResultScene.h"
 #include <cassert>
 
 SceneFactory* SceneFactory::GetInstance()
@@ -17,6 +18,7 @@ BaseScene* SceneFactory::CreateScene(Scene scene)
 	{
 	case Scene::Title: newScene = new TitleScene; break;
 	case Scene::Play: newScene = new GamePlayScene; break;
+	case Scene::Result: newScene = new ResultScene; break;
 	default: newScene = nullptr;
 	}
 
