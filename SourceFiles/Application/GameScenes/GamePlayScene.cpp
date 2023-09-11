@@ -115,7 +115,8 @@ void GamePlayScene::SpriteUpdate()
 
 
 	//nextƒ~ƒm
-	minoSpr->textureLeftTop = { 0.0f,0.0f };
+	int nextMino = stage.GetNextMinoType();
+	minoSpr->textureLeftTop = { nextMino * 20.0f,0.0f };
 
 	for (int i = 0; i < 6; i++) {
 		numSpr[i]->Update();
