@@ -4,6 +4,22 @@
 #include "Input.h"
 #include "Timer.h"
 
+enum class MinoType { I, O, S, Z, J, L, T, Max };
+
+enum class MinoAngle { _0, _90, _180, _270, Max };
+
+struct Mino
+{
+	int type = 0;
+	int angle = 0;
+	int posX = 0;
+	int posY = 0;
+	int shadowY = 0;
+	bool isEarth = false;
+
+	void Reset();
+};
+
 class Stage
 {
 private:
@@ -14,10 +30,6 @@ private:
 	static const int TO_MOVE_TIME = 10;
 
 	Input* input = Input::GetInstance();
-
-	enum class MinoType { I, O, S, Z, J, L, T, Max };
-
-	enum class MinoAngle { _0, _90, _180, _270, Max };
 
 	int minoShapes[(int)MinoType::Max][(int)MinoAngle::Max][MINO_WIDTH][MINO_HEIGHT] =
 	{
@@ -246,12 +258,7 @@ private:
 	}
 	};
 
-	int minoType = 0;
-	int minoAngle = 0;
-	int minoX = 0;
-	int minoY = 0;
-	int shadowY = 0;
-	bool isEarth = false;
+	Mino mino;
 
 	RealTimer Mtimer = 1.0f;
 	RealTimer fallTimer = 0.03f;
@@ -269,7 +276,6 @@ private:
 
 	void Display();
 	bool IsHit(int argMinoX, int argMinoY, int argMinoAngle);
-	void ResetMino();
 	void ShowImGui();
 	void MoveMino();
 	void MinoSet();

@@ -21,7 +21,7 @@ void Stage::Initialize()
 		}
 	}
 	Mtimer.Start();
-	ResetMino();
+	mino.Reset();
 
 	//床
 	for (int i = 0; i < FIELD_WIDTH; ++i) { field[FIELD_HEIGHT - 1][i] = 1; }
@@ -32,23 +32,23 @@ void Stage::Update()
 	ShowImGui();
 	MoveMino();
 
-	shadowY = minoY;
-	while (!IsHit(minoX, shadowY + 1, minoAngle)) { shadowY++; }
+	mino.shadowY = mino.posY;
+	while (!IsHit(mino.posX, mino.shadowY + 1, mino.angle)) { mino.shadowY++; }
 
 	Display();
 
 	// 地面に接地したら少し動かせる
-	if (IsHit(minoX, minoY + 1, minoAngle) && !isEarth) { Mtimer.Start(); isEarth = true; }
+	if (IsHit(mino.posX, mino.posY + 1, mino.angle) && !mino.isEarth) { Mtimer.Start(); mino.isEarth = true; }
 
 	if (Mtimer.Update()) {
 		Mtimer.Start();
 
 		//動かしてるmino
-		if (IsHit(minoX, minoY + 1, minoAngle)) {
+		if (IsHit(mino.posX, mino.posY + 1, mino.angle)) {
 			MinoSet();
-			ResetMino();
+			mino.Reset();
 		}
-		else { ++minoY; }
+		else { ++mino.posY; }
 
 		Display();
 	}
@@ -85,10 +85,10 @@ void Stage::MinoSet()
 {
 	for (int i = 0; i < MINO_HEIGHT; ++i) {
 		for (int j = 0; j < MINO_WIDTH; ++j) {
-			field[minoY + i][Loop(minoX + j, 12)] |= minoShapes[minoType][minoAngle][i][j];
+			field[mino.posY + i][Loop(mino.posX + j, 12)] |= minoShapes[mino.type][mino.angle][i][j];
 		}
 	}
-	ResetMino();
+	mino.Reset();
 }
 
 void Stage::Display()
@@ -99,9 +99,9 @@ void Stage::Display()
 	{
 		for (int j = 0; j < MINO_WIDTH; ++j)
 		{
-			int minoFlag = minoShapes[minoType][minoAngle][i][j];
-			displayBuffer[minoY + i][Loop(minoX + j, 12)] |= minoFlag;
-			displayBuffer[shadowY + i][Loop(minoX + j, 12)] |= (minoFlag << 1);
+			int minoFlag = minoShapes[mino.type][mino.angle][i][j];
+			displayBuffer[mino.posY + i][Loop(mino.posX + j, 12)] |= minoFlag;
+			displayBuffer[mino.shadowY + i][Loop(mino.posX + j, 12)] |= (minoFlag << 1);
 		}
 	}
 
@@ -131,7 +131,7 @@ bool Stage::IsHit(int argMinoX, int argMinoY, int argMinoAngle)
 	{
 		for (int j = 0; j < MINO_WIDTH; ++j)
 		{
-			if (minoShapes[minoType][argMinoAngle][i][j] && field[argMinoY + i][Loop(argMinoX + j, 12)])
+			if (minoShapes[mino.type][argMinoAngle][i][j] && field[argMinoY + i][Loop(argMinoX + j, 12)])
 			{
 				return true;
 			}
@@ -140,22 +140,13 @@ bool Stage::IsHit(int argMinoX, int argMinoY, int argMinoAngle)
 	return false;
 }
 
-void Stage::ResetMino()
-{
-	minoX = 5;
-	minoY = 0;
-	minoType = rand() % (int)MinoType::Max;
-	minoAngle = rand() % (int)MinoAngle::Max;
-	isEarth = false;
-}
-
 void Stage::ShowImGui()
 {
 	ImGui::Text("isEnd:%d", isEnd);
 	ImGui::Text("score:%d", score);
-	ImGui::Text("IsHit:%d", IsHit(minoX, minoY + 1, minoAngle));
+	ImGui::Text("IsHit:%d", IsHit(mino.posX, mino.posY + 1, mino.angle));
 	ImGui::Text("deleteNum:%d", deleteNum);
-	ImGui::Text("minoX:%d", minoX);
+	ImGui::Text("mino.posX:%d", mino.posX);
 	ImGui::Text("Mtimer.GetInterval():%f", Mtimer.GetInterval());
 
 	for (size_t i = 0; i < sum.size(); i++)
@@ -182,36 +173,45 @@ void Stage::MoveMino()
 	// 落とす
 	bool isMinoMoveY = false;
 	if (input->IsTrigger(Key::S)) { fallTimer.Start(); }
-	isMinoMoveY = fallTimer.Update() && !IsHit(minoX, minoY + 1, minoAngle) && input->IsInput(Key::S);
-	if (isMinoMoveY) { ++minoY; }
+	isMinoMoveY = fallTimer.Update() && !IsHit(mino.posX, mino.posY + 1, mino.angle) && input->IsInput(Key::S);
+	if (isMinoMoveY) { ++mino.posY; }
 
 	int minoMoveX = 0;
 	bool isMinoMoveX = false;
 	if (input->IsInput(Key::A)) { holdTimeA++; }
 	else { holdTimeA = 0; }
-	isMinoMoveX = !IsHit(Loop(minoX + 1, 12), minoY, minoAngle);
+	isMinoMoveX = !IsHit(Loop(mino.posX + 1, 12), mino.posY, mino.angle);
 	isMinoMoveX &= (holdTimeA <= TO_MOVE_TIME && input->IsTrigger(Key::A)) || (holdTimeA > TO_MOVE_TIME && holdTimeA % 3 == 0);
 	if (isMinoMoveX) { minoMoveX++; }
 
 	if (input->IsInput(Key::D)) { holdTimeD++; }
 	else { holdTimeD = 0; }
-	isMinoMoveX = !IsHit(Loop(minoX - 1, 12), minoY, minoAngle);
+	isMinoMoveX = !IsHit(Loop(mino.posX - 1, 12), mino.posY, mino.angle);
 	isMinoMoveX &= (holdTimeD <= TO_MOVE_TIME && input->IsTrigger(Key::D)) || (holdTimeD > TO_MOVE_TIME && holdTimeD % 3 == 0);
 	if (isMinoMoveX) { minoMoveX--; }
 
-	minoX = Loop(minoX + minoMoveX, 12);
+	mino.posX = Loop(mino.posX + minoMoveX, 12);
 
 	//	ハードドロップ
 	if (input->IsTrigger(Key::W)) {
-		while (!IsHit(minoX, minoY + 1, minoAngle)) { ++minoY; }
+		while (!IsHit(mino.posX, mino.posY + 1, mino.angle)) { ++mino.posY; }
 		MinoSet();
-		ResetMino();
+		mino.Reset();
 	}
 
 	if (input->IsTrigger(Key::Space)) {
-		if (!IsHit(minoX, minoY, (minoAngle + 1) % (int)MinoAngle::Max))
+		if (!IsHit(mino.posX, mino.posY, (mino.angle + 1) % (int)MinoAngle::Max))
 		{
-			minoAngle = (minoAngle + 1) % (int)MinoAngle::Max;
+			mino.angle = (mino.angle + 1) % (int)MinoAngle::Max;
 		}
 	}
+}
+
+void Mino::Reset()
+{
+	posX = 5;
+	posY = 0;
+	type = rand() % (int)MinoType::Max;
+	angle = rand() % (int)MinoAngle::Max;
+	isEarth = false;
 }
