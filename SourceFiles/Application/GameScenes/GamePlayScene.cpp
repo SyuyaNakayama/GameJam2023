@@ -92,8 +92,8 @@ void GamePlayScene::SpriteInitialize()
 void GamePlayScene::SpriteUpdate()
 {
 	int level = stage.GetLevel();
-	int level_10 = floor(level / 10) * 10;
-	int level_1 = level - level_10;
+	int level_10 = floor(level / 10);
+	int level_1 = level - level_10 * 10;
 	
 	//LEVEL‚Ì\Œ…
 	numSpr[0]->textureLeftTop = { level_10 * 30.0f,0.0f };
@@ -104,7 +104,7 @@ void GamePlayScene::SpriteUpdate()
 
 	int score = stage.GetScore();
 	int score_1000 = floor(score / 1000);
-	int score_100 = floor((score - score_1000) / 100);
+	int score_100 = floor((score - score_1000 * 1000) / 100);
 	
 	//SCORE‚ÌçŒ…
 	numSpr[2]->textureLeftTop = { score_1000 * 30.0f,0.0f };
