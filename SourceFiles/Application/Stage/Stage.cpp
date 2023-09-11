@@ -152,6 +152,8 @@ void Stage::ResetMino()
 
 void Stage::ShowImGui()
 {
+	t = floor(2130 / 1000);
+	ImGui::Text("t:%d", t);
 	ImGui::Text("isEnd:%d", isEnd);
 	ImGui::Text("score:%d", score);
 	ImGui::Text("IsHit:%d", IsHit(minoX, minoY + 1, minoAngle));

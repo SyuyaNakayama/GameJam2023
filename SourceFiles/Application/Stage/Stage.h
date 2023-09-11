@@ -267,7 +267,7 @@ private:
 	bool isEnd = false; //I—¹ƒtƒ‰ƒO
 	int score = 0;
 	int level = 0;
-
+	int t;
 	void Display();
 	bool IsHit(int argMinoX, int argMinoY, int argMinoAngle);
 	void ResetMino();
