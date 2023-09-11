@@ -15,6 +15,7 @@ void GamePlayScene::Update()
 {
 	debugCamera.Update();
 	stage.Update();
+	SpriteUpdate();
 
 	if (stage.IsEnd()) 
 	{
@@ -28,6 +29,10 @@ void GamePlayScene::Draw()
 	for (int i = 0; i < 5; i++) {
 		spr[i]->Draw();
 	}
+	for (int i = 0; i < 6; i++) {
+		numSpr[i]->Draw();
+	}
+	//numSpr[0]->Draw();
 }
 
 void GamePlayScene::SpriteInitialize()
@@ -38,11 +43,6 @@ void GamePlayScene::SpriteInitialize()
 	spr[2] = Sprite::Create("level.png");//"LEVEL"
 	spr[3] = Sprite::Create("score.png");//"SCORE"
 	spr[4] = Sprite::Create("next.png"); //"NEXT"
-
-	//spr->textureLeftTop = { 0.0f,15.0f };
-	//spr->textureSize = { 177.0f,15.0f };
-	//spr->size = { 177.0f,15.0f };
-	//spr->position = { 10,10 };
 
 	spr[0]->textureLeftTop = { 0.0f,0.0f };
 	spr[0]->textureSize = { 430.0f,250.0f };
@@ -61,5 +61,53 @@ void GamePlayScene::SpriteInitialize()
 	//更新
 	for (int i = 0; i < 5; i++) {
 		spr[i]->Update();
+	}
+
+	//数字のスプライト
+	for (int i = 0; i < 6; i++) {
+		numSpr[i] = Sprite::Create("num.png");
+	}
+}
+
+void GamePlayScene::SpriteUpdate()
+{
+	//LEVELの十桁
+	numSpr[0]->textureLeftTop = { 0.0f,0.0f };
+	numSpr[0]->textureSize = { 30.0f,30.0f };
+	numSpr[0]->size = { 30.0f,30.0f };
+	numSpr[0]->position = { 1110.0f,160.0f };
+
+	//LEVELの一桁
+	numSpr[1]->textureLeftTop = { 0.0f,0.0f };
+	numSpr[1]->textureSize = { 30.0f,30.0f };
+	numSpr[1]->size = { 30.0f,30.0f };
+	numSpr[1]->position = { 1140.0f,160.0f };
+
+	//SCOREの千桁
+	numSpr[2]->textureLeftTop = { 0.0f,0.0f };
+	numSpr[2]->textureSize = { 30.0f,30.0f };
+	numSpr[2]->size = { 30.0f,30.0f };
+	numSpr[2]->position = { 1050.0f,210.0f };
+
+	//SCOREの百桁
+	numSpr[3]->textureLeftTop = { 0.0f,0.0f };
+	numSpr[3]->textureSize = { 30.0f,30.0f };
+	numSpr[3]->size = { 30.0f,30.0f };
+	numSpr[3]->position = { 1080.0f,210.0f };
+
+	//SCOREの十桁
+	numSpr[4]->textureLeftTop = { 0.0f,0.0f };
+	numSpr[4]->textureSize = { 30.0f,30.0f };
+	numSpr[4]->size = { 30.0f,30.0f };
+	numSpr[4]->position = { 1110.0f,210.0f };
+
+	//SCOREの一桁
+	numSpr[5]->textureLeftTop = { 0.0f,0.0f };
+	numSpr[5]->textureSize = { 30.0f,30.0f };
+	numSpr[5]->size = { 30.0f,30.0f };
+	numSpr[5]->position = { 1140.0f,210.0f };
+
+	for (int i = 0; i < 6; i++) {
+		numSpr[i]->Update();
 	}
 }

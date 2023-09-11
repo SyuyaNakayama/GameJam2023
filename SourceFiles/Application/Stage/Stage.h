@@ -266,6 +266,7 @@ private:
 
 	bool isEnd = false; //I—¹ƒtƒ‰ƒO
 	int score = 0;
+	int level = 0;
 
 	void Display();
 	bool IsHit(int argMinoX, int argMinoY, int argMinoAngle);
@@ -278,4 +279,8 @@ public:
 	void Initialize();
 	void Update();
 	bool IsEnd() { return isEnd; }
+
+	//getter
+	int GetScore() { return score; }
+	int GetLevel() { return level; }
 };

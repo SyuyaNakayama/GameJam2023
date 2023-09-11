@@ -64,6 +64,7 @@ void Stage::Update()
 		if (Mtimer.GetInterval() >= 0.1f)
 		{
 			Mtimer = Mtimer.GetInterval() - (float)(score / 500) * 0.05;
+			level = score / 500;
 		}
 		// ëµÇ¡ÇΩÇÁè¡Ç∑
 		for (int j = 0; j < FIELD_WIDTH; ++j) {
