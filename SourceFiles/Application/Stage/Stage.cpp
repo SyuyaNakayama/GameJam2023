@@ -65,6 +65,7 @@ void Stage::Update()
 		if (Mtimer.GetInterval() >= 0.1f)
 		{
 			Mtimer = Mtimer.GetInterval() - (float)(score / 500) * 0.05;
+			level = score / 500;
 		}
 		// ëµÇ¡ÇΩÇÁè¡Ç∑
 		for (int j = 0; j < FIELD_WIDTH; ++j) {
@@ -143,6 +144,8 @@ bool Stage::IsHit(int argMinoX, int argMinoY, int argMinoAngle)
 
 void Stage::ShowImGui()
 {
+	t = floor(2130 / 1000);
+	ImGui::Text("t:%d", t);
 	ImGui::Text("isEnd:%d", isEnd);
 	ImGui::Text("score:%d", score);
 	ImGui::Text("IsHit:%d", IsHit(mino.posX, mino.posY + 1, mino.angle));
