@@ -1,6 +1,7 @@
 #include "Stage.h"
 #include <imgui.h>
 #include "Timer.h"
+#include "Quaternion.h"
 
 // ”‚ð0‚©‚çˆê’è‚Ì”ÍˆÍ‚Ü‚Å‚Åƒ‹[ƒv‚³‚¹‚é
 int Loop(int num, int max)
@@ -205,6 +206,11 @@ void Stage::MoveMino()
 			mino.angle = (mino.angle + 1) % (int)MinoAngle::Max;
 		}
 	}
+
+	ViewProjection* pCamera = ModelManager::GetViewProjection();
+	pCamera->eye = Quaternion::RotateVector(
+		{ 0,0,-150 }, Quaternion::MakeAxisAngle(
+			Vector3::MakeAxis(Axis::Y), (mino.posX - 1) * Angle(30)));
 }
 
 void Mino::Reset()
