@@ -13,14 +13,16 @@ int Loop(int num, int max)
 
 void Stage::Initialize()
 {
+	//乱数生成
+	srand(time(nullptr));
 	for (int y = 0; y < 22; y++) {
 		for (int x = 0; x < 12; x++) {
 			blocks[y][x].Initialize((float)x, (float)y);
 		}
 	}
 	Mtimer.Start();
-	//乱数生成
-	srand(time(nullptr));
+	ResetMino();
+
 	//床
 	for (int i = 0; i < FIELD_WIDTH; ++i) { field[FIELD_HEIGHT - 1][i] = 1; }
 }
@@ -35,16 +37,15 @@ void Stage::Update()
 
 	Display();
 
+	// 地面に接地したら少し動かせる
+	if (IsHit(minoX, minoY + 1, minoAngle) && !isEarth) { Mtimer.Start(); isEarth = true; }
+
 	if (Mtimer.Update()) {
 		Mtimer.Start();
 
 		//動かしてるmino
-		if (IsHit(Loop(minoX, 12), minoY + 1, minoAngle)) {
-			for (int i = 0; i < MINO_HEIGHT; ++i) {
-				for (int j = 0; j < MINO_WIDTH; ++j) {
-					field[minoY + i][Loop(minoX + j, 12)] |= minoShapes[minoType][minoAngle][i][j];
-				}
-			}
+		if (IsHit(minoX, minoY + 1, minoAngle)) {
+			MinoSet();
 			ResetMino();
 		}
 		else { ++minoY; }
@@ -52,30 +53,42 @@ void Stage::Update()
 		Display();
 	}
 
-	//揃っている行を探す
-	for (int i = FIELD_HEIGHT - 2; i > 0; i--) { //一番下は枠のため
-		//横一列の合計を求める
+	// 揃っている行を探す
+	for (int i = FIELD_HEIGHT - 2; i > 0; i--) { // 一番下は枠のため
+		// 横一列の合計を求める
 		sum[i] = std::accumulate(field[i].begin(), field[i].end(), 0);
 
+		if (sum[i] != 12) { continue; }
+		score += 100;
+		// ミノ加速
+		if (Mtimer.GetInterval() >= 0.1f)
+		{
+			Mtimer = Mtimer.GetInterval() - (float)(score / 500) * 0.05;
+		}
+		// 揃ったら消す
 		for (int j = 0; j < FIELD_WIDTH; ++j) {
-			if (sum[i] != 12) { continue; }
-			//揃ったら消す
 			field[i][j] = 0;
-			score += 100;
 			for (int x = i; x > 0; x--) {
 				field[x + 1][j] = field[x][j];
 				field[x][j] = 0;
 			}
-			// ミノ加速
-			if (Mtimer.GetInterval() >= 0.1f)
-			{
-				Mtimer = Mtimer.GetInterval() - (float)(score / 500) * 0.05;
-			}
 		}
+		//床
+		for (int i = 0; i < FIELD_WIDTH; ++i) { field[FIELD_HEIGHT - 1][i] = 1; }
 	}
 
-	//一番上まで積みあがったら終了
+	// 一番上まで積みあがったら終了
 	if (sum[1] > 0) { isEnd = true; }
+}
+
+void Stage::MinoSet()
+{
+	for (int i = 0; i < MINO_HEIGHT; ++i) {
+		for (int j = 0; j < MINO_WIDTH; ++j) {
+			field[minoY + i][Loop(minoX + j, 12)] |= minoShapes[minoType][minoAngle][i][j];
+		}
+	}
+	ResetMino();
 }
 
 void Stage::Display()
@@ -133,6 +146,7 @@ void Stage::ResetMino()
 	minoY = 0;
 	minoType = rand() % (int)MinoType::Max;
 	minoAngle = rand() % (int)MinoAngle::Max;
+	isEarth = false;
 }
 
 void Stage::ShowImGui()
@@ -176,23 +190,25 @@ void Stage::MoveMino()
 	if (input->IsInput(Key::A)) { holdTimeA++; }
 	else { holdTimeA = 0; }
 	isMinoMoveX = !IsHit(Loop(minoX + 1, 12), minoY, minoAngle);
-	isMinoMoveX &= (holdTimeA <= 30 && input->IsTrigger(Key::A)) || (holdTimeA > 30 && holdTimeA % 4 == 0);
+	isMinoMoveX &= (holdTimeA <= TO_MOVE_TIME && input->IsTrigger(Key::A)) || (holdTimeA > TO_MOVE_TIME && holdTimeA % 3 == 0);
 	if (isMinoMoveX) { minoMoveX++; }
 
 	if (input->IsInput(Key::D)) { holdTimeD++; }
 	else { holdTimeD = 0; }
-	isMinoMoveX = !IsHit(Loop(minoX + 1, 12), minoY, minoAngle);
-	isMinoMoveX &= (holdTimeD <= 30 && input->IsTrigger(Key::D)) || (holdTimeD > 30 && holdTimeD % 4 == 0);
+	isMinoMoveX = !IsHit(Loop(minoX - 1, 12), minoY, minoAngle);
+	isMinoMoveX &= (holdTimeD <= TO_MOVE_TIME && input->IsTrigger(Key::D)) || (holdTimeD > TO_MOVE_TIME && holdTimeD % 3 == 0);
 	if (isMinoMoveX) { minoMoveX--; }
 
 	minoX = Loop(minoX + minoMoveX, 12);
 
+	//	ハードドロップ
 	if (input->IsTrigger(Key::W)) {
 		while (!IsHit(minoX, minoY + 1, minoAngle)) { ++minoY; }
+		MinoSet();
 		ResetMino();
 	}
 
-	if (input->IsTrigger(Key::Q)) {
+	if (input->IsTrigger(Key::Space)) {
 		if (!IsHit(minoX, minoY, (minoAngle + 1) % (int)MinoAngle::Max))
 		{
 			minoAngle = (minoAngle + 1) % (int)MinoAngle::Max;

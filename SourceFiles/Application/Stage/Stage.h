@@ -9,9 +9,9 @@ class Stage
 private:
 	static const int FIELD_WIDTH = 12;
 	static const int FIELD_HEIGHT = 22;
-
 	static const int MINO_WIDTH = 4;
 	static const int MINO_HEIGHT = 4;
+	static const int TO_MOVE_TIME = 10;
 
 	Input* input = Input::GetInstance();
 
@@ -251,8 +251,9 @@ private:
 	int minoX = 0;
 	int minoY = 0;
 	int shadowY = 0;
+	bool isEarth = false;
 
-	RealTimer Mtimer = 0.1;
+	RealTimer Mtimer = 1.0f;
 	RealTimer fallTimer = 0.03f;
 	int holdTimeA = 0;
 	int holdTimeD = 0;
@@ -271,6 +272,7 @@ private:
 	void ResetMino();
 	void ShowImGui();
 	void MoveMino();
+	void MinoSet();
 
 public:
 	void Initialize();

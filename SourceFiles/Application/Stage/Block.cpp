@@ -2,7 +2,7 @@
 
 void Block::Initialize(float x, float y)
 {
-	//平面にする(デバック用...残せ)
+	//平面にする(デバック用...残せ) ← すいませんでした！！
 	object = ModelManager::Create("cube");
 	object->worldTransform->scale *= 5.0f;
 	object->worldTransform->translation =
