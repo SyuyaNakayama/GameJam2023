@@ -37,7 +37,7 @@ void GamePlayScene::Draw()
 	for (int i = 0; i < 6; i++) {
 		numSpr[i]->Draw();
 	}
-	//numSpr[0]->Draw();
+	minoSpr->Draw();
 }
 
 void GamePlayScene::SpriteInitialize()
@@ -81,6 +81,12 @@ void GamePlayScene::SpriteInitialize()
 	numSpr[3]->position = { 1080.0f,210.0f };
 	numSpr[4]->position = { 1110.0f,210.0f };
 	numSpr[5]->position = { 1140.0f,210.0f };
+
+	//nextミノのスプライト
+	minoSpr = Sprite::Create("mino.png");
+	minoSpr->textureSize = { 20.0f,10.0f };
+	minoSpr->size = { 200.0f,100.0f };
+	minoSpr->position = { 950.0f,500.0f };
 }
 
 void GamePlayScene::SpriteUpdate()
@@ -113,7 +119,12 @@ void GamePlayScene::SpriteUpdate()
 	numSpr[5]->textureLeftTop = { 0.0f,0.0f };
 
 
+	//nextミノ
+	int nextMino = stage.GetNextMinoType();
+	minoSpr->textureLeftTop = { nextMino * 20.0f,0.0f };
+
 	for (int i = 0; i < 6; i++) {
 		numSpr[i]->Update();
 	}
+	minoSpr->Update();
 }
