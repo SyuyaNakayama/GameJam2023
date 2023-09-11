@@ -1,7 +1,6 @@
 #include "GamePlayScene.h"
 #include "SceneManager.h"
 #include "ModelManager.h"
-#include <imgui.h>
 
 void GamePlayScene::Initialize()
 {
