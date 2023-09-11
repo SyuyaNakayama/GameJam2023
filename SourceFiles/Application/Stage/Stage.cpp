@@ -23,7 +23,7 @@ void Stage::Initialize()
 	}
 	Mtimer.Start();
 	mino.Reset();
-
+	nextMinoType = rand() % (int)MinoType::Max;
 	//è∞
 	for (int i = 0; i < FIELD_WIDTH; ++i) { field[FIELD_HEIGHT - 1][i] = 1; }
 }
@@ -48,6 +48,7 @@ void Stage::Update()
 		if (IsHit(mino.posX, mino.posY + 1, mino.angle)) {
 			MinoSet();
 			mino.Reset();
+			nextMinoType = rand() % (int)MinoType::Max;
 		}
 		else { ++mino.posY; }
 
@@ -144,8 +145,8 @@ bool Stage::IsHit(int argMinoX, int argMinoY, int argMinoAngle)
 
 void Stage::ShowImGui()
 {
-	t = floor(2130 / 1000);
-	ImGui::Text("t:%d", t);
+	ImGui::Text("nextMinoType:%d", nextMinoType);
+	ImGui::Text("minoType:%d", minoType);
 	ImGui::Text("isEnd:%d", isEnd);
 	ImGui::Text("score:%d", score);
 	ImGui::Text("IsHit:%d", IsHit(mino.posX, mino.posY + 1, mino.angle));
@@ -201,6 +202,7 @@ void Stage::MoveMino()
 		while (!IsHit(mino.posX, mino.posY + 1, mino.angle)) { ++mino.posY; }
 		MinoSet();
 		mino.Reset();
+		nextMinoType = rand() % (int)MinoType::Max;
 	}
 
 	if (input->IsTrigger(Key::Space)) {
@@ -220,7 +222,7 @@ void Mino::Reset()
 {
 	posX = 5;
 	posY = 0;
-	type = rand() % (int)MinoType::Max;
-	angle = rand() % (int)MinoAngle::Max;
+	type = nextMinoType;
+	angle = 0;
 	isEarth = false;
 }
