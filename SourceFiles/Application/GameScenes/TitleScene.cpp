@@ -22,12 +22,15 @@ void TitleScene::Initialize()
 	spaceBarUI->size = spaceBarUI->textureSize * 1.5f;
 	spaceBarUI->position = { 540,310 };
 	spaceBarUI->Update();
+
+	audio.Initialize(L"delete.mp3");
 }
 
 void TitleScene::Update()
 {
 	if (input->IsTrigger(Key::Space))
 	{
+		audio.Play();
 		sceneManager->ChangeScene(Scene::Play);
 		ModelManager::ClearObjects();
 	}

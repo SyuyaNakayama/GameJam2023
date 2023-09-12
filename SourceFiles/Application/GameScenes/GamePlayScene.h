@@ -11,6 +11,7 @@ private:
 	std::unique_ptr<Sprite> spr[5];
 	std::unique_ptr<Sprite> numSpr[6];
 	std::unique_ptr<Sprite> minoSpr;
+	Audio bgm;
 
 	void Initialize();
 	void Update();
