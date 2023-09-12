@@ -1,6 +1,8 @@
 #pragma once
 #include "Input.h"
 #include "DebugCamera.h"
+#include "Audio.h"
+
 class SceneManager;
 
 class BaseScene

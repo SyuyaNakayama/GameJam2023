@@ -212,10 +212,10 @@ void Stage::MoveMino()
 		}
 	}
 
-	//ViewProjection* pCamera = ModelManager::GetViewProjection();
-	//pCamera->eye = Quaternion::RotateVector(
-	//	{ 0,0,-150 }, Quaternion::MakeAxisAngle(
-	//		Vector3::MakeAxis(Axis::Y), (mino.posX - 1) * Angle(30)));
+	ViewProjection* pCamera = ModelManager::GetViewProjection();
+	pCamera->eye = Quaternion::RotateVector(
+		{ 0,0,-150 }, Quaternion::MakeAxisAngle(
+			Vector3::MakeAxis(Axis::Y), (mino.posX - 1) * Angle(30)));
 }
 
 void Mino::Reset(int nextMinoType)

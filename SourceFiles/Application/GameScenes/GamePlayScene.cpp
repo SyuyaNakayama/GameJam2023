@@ -9,7 +9,7 @@ void GamePlayScene::Initialize()
 	viewProjection.Initialize();
 	viewProjection.eye.z = -150;
 	ModelManager::SetViewProjection(&debugCamera);
-	//ModelManager::SetViewProjection(&viewProjection);
+	ModelManager::SetViewProjection(&viewProjection);
 	stage.Initialize();
 	SpriteInitialize();
 }

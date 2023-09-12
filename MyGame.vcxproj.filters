@@ -162,6 +162,9 @@
     <ClCompile Include="SourceFiles\Engine\Framework\Framework.cpp">
       <Filter>ソース ファイル\Engine\Framework</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\Application\GameScenes\ResultScene.cpp">
+      <Filter>ソース ファイル\Application\GameScenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Engine\2d\ImGuiManager.h">
@@ -319,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\Application\Stage\Block.h">
       <Filter>ソース ファイル\Application\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\Application\GameScenes\ResultScene.h">
+      <Filter>ソース ファイル\Application\GameScenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

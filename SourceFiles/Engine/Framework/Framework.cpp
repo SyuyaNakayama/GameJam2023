@@ -4,7 +4,7 @@
 
 void Framework::Initialize()
 {
-	wAPI->Initialize(L"ンリッヒ、ンリヒヒヒ、ンリッヒ党、ンコホホホ、ンコッホ共和国、ンコソパ・ンルイネ・ンコソハム");
+	wAPI->Initialize(L"3043_DARSタワー");
 	dxCommon->Initialize();
 	Sprite::StaticInitialize();
 	input->Initialize();
