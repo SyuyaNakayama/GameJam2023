@@ -12,6 +12,9 @@ void GamePlayScene::Initialize()
 	ModelManager::SetViewProjection(&viewProjection);
 	stage.Initialize();
 	SpriteInitialize();
+	bgm.Initialize(L"mainstage.mp3");
+	bgm.SetVolume(-2000);
+	bgm.Play();
 }
 
 void GamePlayScene::Update()
@@ -20,11 +23,14 @@ void GamePlayScene::Update()
 	stage.Update();
 	SpriteUpdate();
 
-	ImGui::InputFloat("viewProjection.eye.z", &viewProjection.eye.z);
+	// ƒ‹[ƒvÄ¶
+	if (bgm.IsFinished()) { bgm.SetPlayPosition(0); }
+	if (stage.IsPinch()) { bgm.SetSpeed(1.5); }
+	else { bgm.SetSpeed(1); }
 
-	if (stage.IsEnd()) 
+	if (stage.IsEnd())
 	{
-		sceneManager->ChangeScene(Scene::Result); 
+		sceneManager->ChangeScene(Scene::Result);
 		ModelManager::ClearObjects();
 	}
 }
@@ -94,18 +100,18 @@ void GamePlayScene::SpriteUpdate()
 	int level = stage.GetLevel();
 	int level_10 = floor(level / 10);
 	int level_1 = level - level_10 * 10;
-	
+
 	//LEVEL‚Ì\Œ…
 	numSpr[0]->textureLeftTop = { level_10 * 30.0f,0.0f };
-	
+
 	//LEVEL‚ÌˆêŒ…
 	numSpr[1]->textureLeftTop = { level_1 * 30.0f,0.0f };
-	
+
 
 	int score = stage.GetScore();
 	int score_1000 = floor(score / 1000);
 	int score_100 = floor((score - score_1000 * 1000) / 100);
-	
+
 	//SCORE‚ÌçŒ…
 	numSpr[2]->textureLeftTop = { score_1000 * 30.0f,0.0f };
 

@@ -10,6 +10,12 @@ void ResultScene::Initialize()
 
 void ResultScene::Update()
 {
+	if (input->IsTrigger(Key::Space))
+	{
+		sceneManager->ChangeScene(Scene::Title);
+		ModelManager::ClearObjects();
+	}
+
 }
 
 void ResultScene::Draw()

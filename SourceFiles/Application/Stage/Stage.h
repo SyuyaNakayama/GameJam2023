@@ -1,8 +1,10 @@
 #pragma once
 #include <array>
+#include <map>
 #include "Block.h"
 #include "Input.h"
 #include "Timer.h"
+#include "Audio.h"
 
 enum class MinoType { I, O, S, Z, J, L, T, Max };
 
@@ -191,7 +193,7 @@ private:
 			0, 1, 0, 0,
 			0, 1, 0, 0
 		}
-		
+
 	},
 
 		// MINO_TYPE_L
@@ -228,14 +230,14 @@ private:
 
 		// MINO_TYPE_T
 		{
-			
-		// MINO_ANGLE_0
-		{
-			0, 0, 0, 0,
-			0, 0, 1, 0,
-			0, 1, 1, 1,
-			0, 0, 0, 0
-		},
+
+			// MINO_ANGLE_0
+			{
+				0, 0, 0, 0,
+				0, 0, 1, 0,
+				0, 1, 1, 1,
+				0, 0, 0, 0
+			},
 		// MINO_ANGLE_90
 		{
 			0, 0, 1, 0,
@@ -278,6 +280,8 @@ private:
 	int score = 0;
 	int level = 0;
 
+	std::map<std::string, Audio> se;
+
 	void Display();
 	bool IsHit(int argMinoX, int argMinoY, int argMinoAngle);
 	void ShowImGui();
@@ -293,4 +297,5 @@ public:
 	int GetScore() { return score; }
 	int GetLevel() { return level; }
 	int GetNextMinoType() { return nextMinoType; }
+	bool IsPinch() { return sum[6]; }
 };

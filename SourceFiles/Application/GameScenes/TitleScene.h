@@ -9,6 +9,8 @@ class TitleScene : public BaseScene
 	std::unique_ptr<Sprite> title;
 	std::unique_ptr<Sprite> spaceBarUI;
 
+	Audio audio;
+
 	void Initialize();
 	void Update();
 	void Draw();
