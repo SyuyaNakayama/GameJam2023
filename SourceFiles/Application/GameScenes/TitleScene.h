@@ -8,7 +8,6 @@ class TitleScene : public BaseScene
 	ViewProjection viewProjection;
 	std::unique_ptr<Sprite> title;
 	std::unique_ptr<Sprite> spaceBarUI;
-
 	Audio audio;
 
 	void Initialize();

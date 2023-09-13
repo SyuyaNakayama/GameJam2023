@@ -27,13 +27,12 @@ void GamePlayScene::Update()
 	// ループ再生
 	if (bgm.IsFinished()) { bgm.SetPlayPosition(0); }
 	// ピンチの時に再生速度を上げる
-	if (stage.IsPinch()) { bgm.SetSpeed(1.5); }
+	if (stage.IsPinch()) { bgm.SetSpeed(1.4); }
 	else { bgm.SetSpeed(1); }
 
 	if (stage.IsEnd())
 	{
 		sceneManager->ChangeScene(Scene::Result, false);
-		//ModelManager::ClearObjects();
 	}
 }
 

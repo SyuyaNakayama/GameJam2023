@@ -5,6 +5,8 @@
 
 void ResultScene::Initialize()
 {
+	audio.Initialize(L"delete.mp3");
+	
 	ui["Score"] = Sprite::Create("score.png");
 	ui["Score"]->position = { 100.0f,200.0f };
 	ui["Score"]->size *= 3.0f;
@@ -59,6 +61,7 @@ void ResultScene::Update()
 	{
 		sceneManager->ChangeScene(Scene::Title);
 		ModelManager::ClearObjects();
+		audio.Play();
 	}
 }
 

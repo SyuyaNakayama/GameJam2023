@@ -178,6 +178,7 @@
     <ClCompile Include="SourceFiles\Application\Stage\Block.cpp" />
     <ClCompile Include="SourceFiles\Application\Stage\Stage.cpp" />
     <ClCompile Include="SourceFiles\Engine\Framework\Framework.cpp" />
+    <ClCompile Include="SourceFiles\Engine\Scene\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\Application\GameScenes\GamePlayScene.h" />

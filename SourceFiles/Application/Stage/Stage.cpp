@@ -26,7 +26,6 @@ void Stage::Initialize()
 	Mtimer.Start();
 	nextMinoType = (*minoTypeRan)();
 	mino.Reset(nextMinoType);
-	//nextMinoType = rand() % (int)MinoType::Max;
 
 	//è∞
 	for (int i = 0; i < FIELD_WIDTH; ++i) { field[FIELD_HEIGHT - 1][i] = 1; }
@@ -107,6 +106,11 @@ void Stage::MinoSet()
 void Stage::Display()
 {
 	displayBuffer = field;
+	for (int i = 0; i < FIELD_WIDTH; ++i)
+	{
+		displayBuffer[0][i] |= 4;
+		displayBuffer[1][i] |= 4;
+	}
 
 	for (int i = 0; i < MINO_HEIGHT; ++i)
 	{
@@ -124,15 +128,19 @@ void Stage::Display()
 		{
 			if (displayBuffer[i][j] & 1)
 			{
-				blocks[i][j].GetMainSprite()->color = { 0.6f, 0.0f, 0.0f, 1.0f };
+				blocks[i][j].GetMainSprite()->color = { 0.9f, 0.0f, 0.0f };
 			}
 			else if (displayBuffer[i][j] & 2)
 			{
-				blocks[i][j].GetMainSprite()->color = { 0.3f, 0.6f, 0.3f, 1.0f };
+				blocks[i][j].GetMainSprite()->color = { 0.3f, 0.6f, 0.3f };
+			}
+			else if (displayBuffer[i][j] & 4)
+			{
+				blocks[i][j].GetMainSprite()->color = { 0.6f, 0.3f, 0.3f };
 			}
 			else
 			{
-				blocks[i][j].GetMainSprite()->color = { 0.6f, 0.6f, 0.6f, 1.0f };
+				blocks[i][j].GetMainSprite()->color = { 0.6f, 0.6f, 0.6f };
 			}
 		}
 	}
@@ -155,32 +163,6 @@ bool Stage::IsHit(int argMinoX, int argMinoY, int argMinoAngle)
 
 void Stage::ShowImGui()
 {
-	ImGui::Text("nextMinoType:%d", nextMinoType);
-	ImGui::Text("minoType:%d", mino.type);
-	ImGui::Text("isEnd:%d", isEnd);
-	ImGui::Text("score:%d", score);
-	ImGui::Text("IsHit:%d", IsHit(mino.posX, mino.posY + 1, mino.angle));
-	ImGui::Text("deleteNum:%d", deleteNum);
-	ImGui::Text("mino.posX:%d", mino.posX);
-	ImGui::Text("Mtimer.GetInterval():%f", Mtimer.GetInterval());
-
-	for (size_t i = 0; i < sum.size(); i++)
-	{
-		//ImGui::Text("sum[%d]:%d", i, sum[i]);
-	}
-	//for (int i = 0; i < 22; i++) {
-	//	ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-	//		field[i][0], field[i][1], field[i][2], field[i][3], field[i][4], field[i][5],
-	//		field[i][6], field[i][7], field[i][8], field[i][9], field[i][10], field[i][11]);
-	//}
-
-	//ImGui::Text("----------------------------------");
-
-	for (int i = 0; i < 22; i++) {
-		ImGui::Text("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-			displayBuffer[i][0], displayBuffer[i][1], displayBuffer[i][2], displayBuffer[i][3], displayBuffer[i][4], displayBuffer[i][5],
-			displayBuffer[i][6], displayBuffer[i][7], displayBuffer[i][8], displayBuffer[i][9], displayBuffer[i][10], displayBuffer[i][11]);
-	}
 }
 
 void Stage::MoveMino()
