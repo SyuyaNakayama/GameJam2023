@@ -126,6 +126,14 @@ void GamePlayScene::SpriteUpdate()
 	//SCOREの一桁
 	numSpr[5]->textureLeftTop = { 0.0f,0.0f };
 
+	//スコアが10000を超えたら9999にする
+	if (score >= 10000) {
+		numSpr[2]->textureLeftTop = { 9 * 30.0f,0.0f };
+		numSpr[3]->textureLeftTop = { 9 * 30.0f,0.0f };
+		numSpr[4]->textureLeftTop = { 9 * 30.0f,0.0f };
+		numSpr[5]->textureLeftTop = { 9 * 30.0f,0.0f };
+	}
+
 
 	//nextミノ
 	int nextMino = stage.GetNextMinoType();
