@@ -7,7 +7,7 @@
 #include "Audio.h"
 #include "Random.h"
 
-enum class MinoType { I, O, S, Z, J, L, T, Max };
+enum class MinoType { I, O, S, Z, L, J, T, Max };
 
 enum class MinoAngle { _0, _90, _180, _270, Max };
 
@@ -164,7 +164,37 @@ private:
 			0, 0, 0, 0
 		}
 	},
-
+		// MINO_TYPE_L
+		{
+			// MINO_ANGLE_0
+			{
+				0, 0, 0, 0,
+				0, 0, 1, 0,
+				1, 1, 1, 0,
+				0, 0, 0, 0
+			},
+		// MINO_ANGLE_90
+		{
+			0, 0, 0, 0,
+			0, 1, 1, 0,
+			0, 0, 1, 0,
+			0, 0, 1, 0
+		},
+		// MINO_ANGLE_180
+		{
+			0, 0, 0, 0,
+			0, 1, 1, 1,
+			0, 1, 0, 0,
+			0, 0, 0, 0
+		},
+		// MINO_ANGLE_270
+		{
+			0, 1, 0, 0,
+			0, 1, 0, 0,
+			0, 1, 1, 0,
+			0, 0, 0, 0
+		}
+	},
 		// MINO_TYPE_J
 		{
 			// MINO_ANGLE_0
@@ -196,38 +226,6 @@ private:
 			0, 1, 0, 0
 		}
 
-	},
-
-		// MINO_TYPE_L
-		{
-			// MINO_ANGLE_0
-			{
-				0, 0, 0, 0,
-				0, 0, 1, 0,
-				1, 1, 1, 0,
-				0, 0, 0, 0
-			},
-		// MINO_ANGLE_90
-		{
-			0, 0, 0, 0,
-			0, 1, 1, 0,
-			0, 0, 1, 0,
-			0, 0, 1, 0
-		},
-		// MINO_ANGLE_180
-		{
-			0, 0, 0, 0,
-			0, 1, 1, 1,
-			0, 1, 0, 0,
-			0, 0, 0, 0
-		},
-		// MINO_ANGLE_270
-		{
-			0, 1, 0, 0,
-			0, 1, 0, 0,
-			0, 1, 1, 0,
-			0, 0, 0, 0
-		}
 	},
 
 		// MINO_TYPE_T
