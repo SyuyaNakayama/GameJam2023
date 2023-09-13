@@ -1,8 +1,6 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
 #include "ModelManager.h"
-#include "ImGuiManager.h"
-#include <imgui.h>
 
 void TitleScene::Initialize()
 {

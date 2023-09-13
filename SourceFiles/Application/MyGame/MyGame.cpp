@@ -1,6 +1,5 @@
 ﻿#include "MyGame.h"
 #include "ModelManager.h"
-#include "ImGuiManager.h"
 #include "Audio.h"
 #include "CollisionManager.h"
 
@@ -10,7 +9,6 @@ void MyGame::Initialize()
 	sceneManager->ChangeScene(Scene::Title, false);
 	ModelManager::Initialize();
 	ParticleManager::Initialize();
-	ImGuiManager::Initialize();
 	Audio::StaticInitialize();
 	postEffect = std::make_unique<PostEffect>();
 	postEffect->Initialize();
@@ -18,13 +16,11 @@ void MyGame::Initialize()
 
 void MyGame::Update()
 {
-	ImGuiManager::Begin();
 	Framework::Update();
 	ModelManager::Update();
 	CollisionManager::CheckAllCollisions();
 	Physics::ResetCollideList();
 	ParticleManager::Update();
-	ImGuiManager::End();
 }
 
 void MyGame::Draw()
@@ -41,13 +37,11 @@ void MyGame::Draw()
 	
 	dxCommon->PreDraw();
 	postEffect->Draw();
-	ImGuiManager::Draw();
 	dxCommon->PostDraw();
 }
 
 void MyGame::Finalize()
 {
-	ImGuiManager::Finalize();
 	Audio::Finalize();
 	Framework::Finalize();
 }

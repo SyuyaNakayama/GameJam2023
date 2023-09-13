@@ -188,12 +188,10 @@
     <ClInclude Include="SourceFiles\Application\GameScenes\TitleScene.h" />
     <ClInclude Include="SourceFiles\Application\MyGame\MyGame.h" />
     <ClInclude Include="SourceFiles\Application\Stage\Block.h" />
-    <ClInclude Include="SourceFiles\Engine\2d\ImGuiManager.h" />
     <ClInclude Include="SourceFiles\Engine\2d\PostEffect.h" />
     <ClInclude Include="SourceFiles\Engine\2d\Sprite.h" />
     <ClInclude Include="SourceFiles\Engine\2d\SpriteAnimation.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Camera\BaseCamera.h" />
-    <ClInclude Include="SourceFiles\Engine\3d\Camera\DebugCamera.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Camera\ViewProjection.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Material.h" />
     <ClInclude Include="SourceFiles\Engine\3d\Object\Mesh.h" />

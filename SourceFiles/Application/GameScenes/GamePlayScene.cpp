@@ -5,11 +5,9 @@
 
 void GamePlayScene::Initialize()
 {
-	debugCamera.Initialize({ 55,-55 }, 300);
 	viewProjection = new ViewProjection;
 	viewProjection->Initialize();
 	viewProjection->eye.z = -150;
-	ModelManager::SetViewProjection(&debugCamera);
 	ModelManager::SetViewProjection(viewProjection);
 	stage.Initialize();
 	SpriteInitialize();
@@ -20,7 +18,6 @@ void GamePlayScene::Initialize()
 
 void GamePlayScene::Update()
 {
-	debugCamera.Update();
 	stage.Update();
 	SpriteUpdate();
 
