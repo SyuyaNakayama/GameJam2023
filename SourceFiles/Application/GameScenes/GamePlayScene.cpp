@@ -60,12 +60,12 @@ void GamePlayScene::SpriteInitialize()
 	spr[0]->textureLeftTop = { 0.0f,0.0f };
 	spr[0]->textureSize = { 430.0f,250.0f };
 	spr[0]->size = { 430.0f,250.0f };
-	spr[0]->position = { 0,150 };
+	spr[0]->position = { 100,100 };
 
 	spr[1]->textureLeftTop = { 0.0f,250.0f };
 	spr[1]->textureSize = { 430.0f,136.0f };
 	spr[1]->size = { 430.0f,136.0f };
-	spr[1]->position = { 0,550 };
+	spr[1]->position = { 100,400 };
 
 	spr[2]->position = { 900.0f,150.0f };
 	spr[3]->position = { 900.0f,200.0f };

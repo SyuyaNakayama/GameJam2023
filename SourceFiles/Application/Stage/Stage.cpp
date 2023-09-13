@@ -16,9 +16,7 @@ int Loop(int num, int max)
 
 void Stage::Initialize()
 {
-	//—”¶¬
-	srand(time(nullptr));
-
+	minoTypeRan = new Random_Int(0, (int)MinoType::Max-1);
 	for (int y = 0; y < 22; y++) {
 		for (int x = 0; x < 12; x++) {
 			blocks[y][x].Initialize((float)x, (float)y);
@@ -26,8 +24,9 @@ void Stage::Initialize()
 	}
 
 	Mtimer.Start();
+	nextMinoType = (*minoTypeRan)();
 	mino.Reset(nextMinoType);
-	nextMinoType = rand() % (int)MinoType::Max;
+	//nextMinoType = rand() % (int)MinoType::Max;
 
 	//°
 	for (int i = 0; i < FIELD_WIDTH; ++i) { field[FIELD_HEIGHT - 1][i] = 1; }
@@ -58,7 +57,7 @@ void Stage::Update()
 		if (IsHit(mino.posX, mino.posY + 1, mino.angle)) {
 			MinoSet();
 			mino.Reset(nextMinoType);
-			nextMinoType = rand() % (int)MinoType::Max;
+			nextMinoType = (*minoTypeRan)();
 		}
 		else { ++mino.posY; }
 
@@ -214,7 +213,7 @@ void Stage::MoveMino()
 		while (!IsHit(mino.posX, mino.posY + 1, mino.angle)) { ++mino.posY; }
 		MinoSet();
 		mino.Reset(nextMinoType);
-		nextMinoType = rand() % (int)MinoType::Max;
+		nextMinoType = (*minoTypeRan)();
 		se["Harddrop"].Play();
 	}
 

@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Timer.h"
 #include "Audio.h"
+#include "Random.h"
 
 enum class MinoType { I, O, S, Z, J, L, T, Max };
 
@@ -281,6 +282,8 @@ private:
 	int score = 0;
 	int level = 0;
 
+	Random_Int* minoTypeRan;
+
 	std::map<std::string, Audio> se;
 
 	void Display();
@@ -300,4 +303,5 @@ public:
 	int GetNextMinoType() { return nextMinoType; }
 	bool IsPinch() { return sum[6]; }
 	static int GetScoreMem() { return scoreMem; }
+	void Finalize() { delete minoTypeRan; }
 };
