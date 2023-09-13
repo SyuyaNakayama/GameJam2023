@@ -1,65 +1,17 @@
 #include "Block.h"
 
-// 数を0から一定の範囲まででループさせる
-int Loop(int num, int max)
+void Block::Initialize(float x, float y)
 {
-	num = num % max;
-	// 除数を足して正の整数にする
-	if (num < 0) { num += max; }
-	return num;
-}
+	//平面にする(デバック用...残せ) ← すいませんでした！！
+	//object = ModelManager::Create("cube");
+	//object->worldTransform->scale *= 5.0f;
+	//object->worldTransform->translation =
+	//{ -((float)x - 22 / 2) * 10, -((float)y - 12 / 2) * 10, 0.0f };
 
-void Block::Initialize()
-{
-	blockArr.push_back({ -1,1 });
-	blockArr.push_back({ 1,0 });
-	blockArr.push_back({ 0,1 });
-	blockPos = { 6,15 };
-	fallTimer = 60;
-	input = Input::GetInstance();
-	parent = ModelManager::Create("cube");
-	parent->worldTransform->scale *= 3.0f;
-	for (const auto& arr : blockArr)
-	{
-		Object3d* model = ModelManager::Create("cube");
-		model->worldTransform->parent = parent->worldTransform.get();
-		model->worldTransform->translation.x = 2 * arr.x * model->worldTransform->scale.x;
-		model->worldTransform->translation.y = 2 * arr.y * model->worldTransform->scale.y;
-		models.push_back(model);
-	}
-}
 
-void Block::Move()
-{
-	// 移動
-	blockPos.x += input->IsTrigger(Key::D) - input->IsTrigger(Key::A);
-	blockPos.x = Loop(blockPos.x, 12);
-	// 回転
-	parent->worldTransform->rotation.z += Angle((input->IsTrigger(Key::Left) - input->IsTrigger(Key::Right)) * 90);
-}
-
-void Block::Update()
-{
-	Move();
-	if (fallTimer.Update() && (int)blockPos.y > 0)
-	{
-		blockPos.y -= 1;
-	}
-	parent->worldTransform->translation.x = 2 * blockPos.x * parent->worldTransform->scale.x;
-	parent->worldTransform->translation.y = 2 * blockPos.y * parent->worldTransform->scale.y;
-}
-
-std::vector<Vector2> Block::GetWorldPos()
-{
-	std::vector<Vector2> ret;
-	for (auto& bArr : blockArr)
-	{
-		Vector2 pos = bArr + blockPos;
-		int divisor = 12; // 除数
-		pos.x = (int)pos.x % 12;
-		// 除数を足して正の整数にする
-		if (pos.x < 0) { pos.x += divisor; }
-		ret.push_back(pos);
-	}
-	return ret;
+	//円柱にする
+	object = ModelManager::Create("block");
+	object->worldTransform->scale *= 10.0f;
+	object->worldTransform->translation = { 0.0f, -(float)y * 4.8f + 55 , 0.0f };
+	object->worldTransform->rotation.y = x * Angle(30);
 }

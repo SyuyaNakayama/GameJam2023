@@ -24,6 +24,14 @@ public:
 	void Stop() { mediaControl->Stop(); }
 	void SetSpeed(double playSpd) { mediaPosition->put_Rate(playSpd); }
 	void SetPlayPosition(double playPosition) { mediaPosition->put_CurrentPosition(playPosition); }
+	bool IsFinished() 
+	{
+		REFTIME length = 0; 
+		REFTIME current = 0; 
+		mediaPosition->get_Duration(&length); 
+		mediaPosition->get_CurrentPosition(&current);
+		return length == current;
+	}
 	// -10000(無音)~0(最大音量) : 単位 デシベル
 	void SetVolume(long volume) { basicAudio->put_Volume(volume); }
 	// -10000(左)～10000(右)
