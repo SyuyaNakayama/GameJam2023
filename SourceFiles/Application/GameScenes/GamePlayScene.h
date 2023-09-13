@@ -6,7 +6,7 @@
 class GamePlayScene : public BaseScene
 {
 private:
-	ViewProjection viewProjection;
+	ViewProjection* viewProjection;
 	Stage stage; 
 	std::unique_ptr<Sprite> spr[5];
 	std::unique_ptr<Sprite> numSpr[6];

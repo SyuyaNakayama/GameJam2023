@@ -6,10 +6,11 @@
 void GamePlayScene::Initialize()
 {
 	debugCamera.Initialize({ 55,-55 }, 300);
-	viewProjection.Initialize();
-	viewProjection.eye.z = -150;
+	viewProjection = new ViewProjection;
+	viewProjection->Initialize();
+	viewProjection->eye.z = -150;
 	ModelManager::SetViewProjection(&debugCamera);
-	ModelManager::SetViewProjection(&viewProjection);
+	ModelManager::SetViewProjection(viewProjection);
 	stage.Initialize();
 	SpriteInitialize();
 	bgm.Initialize(L"mainstage.mp3");
@@ -25,13 +26,14 @@ void GamePlayScene::Update()
 
 	// ループ再生
 	if (bgm.IsFinished()) { bgm.SetPlayPosition(0); }
+	// ピンチの時に再生速度を上げる
 	if (stage.IsPinch()) { bgm.SetSpeed(1.5); }
 	else { bgm.SetSpeed(1); }
 
 	if (stage.IsEnd())
 	{
-		sceneManager->ChangeScene(Scene::Result);
-		ModelManager::ClearObjects();
+		sceneManager->ChangeScene(Scene::Result, false);
+		//ModelManager::ClearObjects();
 	}
 }
 

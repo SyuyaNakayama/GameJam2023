@@ -30,6 +30,7 @@ private:
 	static const int MINO_WIDTH = 4;
 	static const int MINO_HEIGHT = 4;
 	static const int TO_MOVE_TIME = 10;
+	static int scoreMem;
 
 	Input* input = Input::GetInstance();
 
@@ -298,4 +299,5 @@ public:
 	int GetLevel() { return level; }
 	int GetNextMinoType() { return nextMinoType; }
 	bool IsPinch() { return sum[6]; }
+	static int GetScoreMem() { return scoreMem; }
 };

@@ -3,6 +3,8 @@
 #include "Timer.h"
 #include "Quaternion.h"
 
+int Stage::scoreMem = 0;
+
 // 数を0から一定の範囲まででループさせる
 int Loop(int num, int max)
 {
@@ -16,17 +18,17 @@ void Stage::Initialize()
 {
 	//乱数生成
 	srand(time(nullptr));
-	
+
 	for (int y = 0; y < 22; y++) {
 		for (int x = 0; x < 12; x++) {
 			blocks[y][x].Initialize((float)x, (float)y);
 		}
 	}
-	
+
 	Mtimer.Start();
 	mino.Reset(nextMinoType);
 	nextMinoType = rand() % (int)MinoType::Max;
-	
+
 	//床
 	for (int i = 0; i < FIELD_WIDTH; ++i) { field[FIELD_HEIGHT - 1][i] = 1; }
 
@@ -90,7 +92,7 @@ void Stage::Update()
 	}
 
 	// 一番上まで積みあがったら終了
-	if (sum[1] > 0) { isEnd = true; }
+	if (sum[1] > 0) { isEnd = true; scoreMem = score; }
 }
 
 void Stage::MinoSet()
@@ -196,7 +198,7 @@ void Stage::MoveMino()
 	else { holdTimeA = 0; }
 	isMinoMoveX = !IsHit(Loop(mino.posX + 1, 12), mino.posY, mino.angle);
 	isMinoMoveX &= (holdTimeA <= TO_MOVE_TIME && input->IsTrigger(Key::A)) || (holdTimeA > TO_MOVE_TIME && holdTimeA % 3 == 0);
-	if (isMinoMoveX) { minoMoveX++;  }
+	if (isMinoMoveX) { minoMoveX++; }
 
 	if (input->IsInput(Key::D)) { holdTimeD++; }
 	else { holdTimeD = 0; }
@@ -204,7 +206,7 @@ void Stage::MoveMino()
 	isMinoMoveX &= (holdTimeD <= TO_MOVE_TIME && input->IsTrigger(Key::D)) || (holdTimeD > TO_MOVE_TIME && holdTimeD % 3 == 0);
 	if (isMinoMoveX) { minoMoveX--; }
 
-	if(minoMoveX){ se["Rotate"].Play(); }
+	if (minoMoveX) { se["Rotate"].Play(); }
 	mino.posX = Loop(mino.posX + minoMoveX, 12);
 
 	//	ハードドロップ
