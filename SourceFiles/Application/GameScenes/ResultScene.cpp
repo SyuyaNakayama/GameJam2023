@@ -14,8 +14,13 @@ void ResultScene::Initialize()
 	ui["Space"]->textureLeftTop = { 0.0f,250.0f };
 	ui["Space"]->textureSize = { 430.0f, 100.0f };
 	ui["Space"]->size = ui["Space"]->textureSize * 1.5f;
-	ui["Space"]->position = { 650,250 };
+	ui["Space"]->position = { 650,300 };
 	ui["Space"]->Update();
+
+	ui["titlehe"] = Sprite::Create("titlehe.png");
+	ui["titlehe"]->position = { 840,250 };
+	ui["titlehe"]->size *= 1.0f;
+	ui["titlehe"]->Update();
 
 	//数字のスプライト
 	for (auto& spr : numSpr) {
