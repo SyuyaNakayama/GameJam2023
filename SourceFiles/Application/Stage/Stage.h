@@ -274,7 +274,6 @@ private:
 	std::array<std::array<int, FIELD_WIDTH>, FIELD_HEIGHT> displayBuffer;
 
 	std::array<int, 21> sum;
-	int deleteNum;
 
 	bool isEnd = false; //I—¹ƒtƒ‰ƒO
 	int score = 0;
@@ -286,7 +285,6 @@ private:
 
 	void Display();
 	bool IsHit(int argMinoX, int argMinoY, int argMinoAngle);
-	void ShowImGui();
 	void MoveMino();
 	void MinoSet();
 

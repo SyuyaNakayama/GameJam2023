@@ -1,5 +1,4 @@
 #include "Stage.h"
-#include <imgui.h>
 #include "Timer.h"
 #include "Quaternion.h"
 
@@ -38,7 +37,6 @@ void Stage::Initialize()
 
 void Stage::Update()
 {
-	ShowImGui();
 	MoveMino();
 
 	mino.shadowY = mino.posY;
@@ -159,10 +157,6 @@ bool Stage::IsHit(int argMinoX, int argMinoY, int argMinoAngle)
 		}
 	}
 	return false;
-}
-
-void Stage::ShowImGui()
-{
 }
 
 void Stage::MoveMino()

@@ -1,13 +1,8 @@
 #pragma once
 #include "Framework.h"
-#include "PostEffect.h"
-#include "ParticleManager.h"
 
 class MyGame : public Framework
 {
-private:
-	std::unique_ptr<PostEffect> postEffect;
-
 public:
 	void Initialize() override;
 	void Update() override;

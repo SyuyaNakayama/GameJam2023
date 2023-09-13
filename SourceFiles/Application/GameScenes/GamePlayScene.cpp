@@ -27,20 +27,13 @@ void GamePlayScene::Update()
 	if (stage.IsPinch()) { bgm.SetSpeed(1.4); }
 	else { bgm.SetSpeed(1); }
 
-	if (stage.IsEnd())
-	{
-		sceneManager->ChangeScene(Scene::Result, false);
-	}
+	if (stage.IsEnd()) { sceneManager->ChangeScene(Scene::Result, false); }
 }
 
 void GamePlayScene::Draw()
 {
-	for (int i = 0; i < 5; i++) {
-		spr[i]->Draw();
-	}
-	for (int i = 0; i < 6; i++) {
-		numSpr[i]->Draw();
-	}
+	for (int i = 0; i < 5; i++) { spr[i]->Draw(); }
+	for (int i = 0; i < 6; i++) { numSpr[i]->Draw(); }
 	minoSpr->Draw();
 }
 
@@ -68,9 +61,7 @@ void GamePlayScene::SpriteInitialize()
 	spr[4]->position = { 900.0f,400.0f };
 
 	//更新
-	for (int i = 0; i < 5; i++) {
-		spr[i]->Update();
-	}
+	for (int i = 0; i < 5; i++) { spr[i]->Update(); }
 
 	//数字のスプライト
 	for (int i = 0; i < 6; i++) {
@@ -135,8 +126,6 @@ void GamePlayScene::SpriteUpdate()
 	int nextMino = stage.GetNextMinoType();
 	minoSpr->textureLeftTop = { nextMino * 20.0f,0.0f };
 
-	for (int i = 0; i < 6; i++) {
-		numSpr[i]->Update();
-	}
+	for (int i = 0; i < 6; i++) { numSpr[i]->Update(); }
 	minoSpr->Update();
 }
