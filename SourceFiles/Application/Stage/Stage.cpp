@@ -114,7 +114,7 @@ void Stage::Display()
 		{
 			if (displayBuffer[i][j] & 1)
 			{
-				blocks[i][j].GetMainSprite()->color = { 0.3f, 0.0f, 0.0f, 1.0f };
+				blocks[i][j].GetMainSprite()->color = { 0.6f, 0.0f, 0.0f, 1.0f };
 			}
 			else if (displayBuffer[i][j] & 2)
 			{
@@ -122,7 +122,7 @@ void Stage::Display()
 			}
 			else
 			{
-				blocks[i][j].GetMainSprite()->color = { 0.3f, 0.3f, 0.3f, 1.0f };
+				blocks[i][j].GetMainSprite()->color = { 0.6f, 0.6f, 0.6f, 1.0f };
 			}
 		}
 	}
